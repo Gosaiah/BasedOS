@@ -1,4 +1,4 @@
-TSOS-2014
+BasedOS
 ============
 
 This is my Fall 2014 Operating Systems class initial project.
