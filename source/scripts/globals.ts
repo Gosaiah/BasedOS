@@ -12,8 +12,8 @@
 // Global "CONSTANTS" (There is currently no const or final or readonly type annotation in TypeScript.)
 // TODO: Make a global object and use that instead of the "_" naming convention in the global namespace.
 //
-var APP_NAME: string    = "TSOS";   // 'cause Bob and I were at a loss for a better name.
-var APP_VERSION: string = "0.07";   // What did you expect?
+var APP_NAME: string    = "BasedOS";   // 'if the basedGod needed an OS, is would be this #rare #thankyoubasedgod
+var APP_VERSION: string = "8.17";   // The most #rare day all year. the birthday of the BasedGOD
 
 var CPU_CLOCK_INTERVAL: number = 100;   // This is in ms, or milliseconds, so 1000 = 1 second.
 
