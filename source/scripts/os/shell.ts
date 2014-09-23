@@ -218,7 +218,7 @@ module TSOS {
         }
 
         public shellVer(args) {
-            _StdOut.putText(APP_NAME + " version " + APP_VERSION);
+            _StdOut.putText(APP_NAME + " myVersion " + APP_VERSION);
         }
 
         public shellHelp(args) {
