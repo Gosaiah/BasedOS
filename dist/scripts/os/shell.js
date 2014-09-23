@@ -277,11 +277,17 @@ var TSOS;
         {
         	var now = new Date();_StdOut.putText(now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
         };
-        
+            
         Shell.prototype.shellWhereAmI = function (args) 
          {
          	_StdOut.putText("Location received, Deploying Task Force. Stay Positive - Lil B");
          };
+         
+        Shell.prototype.shellRandomQuote = function (args)
+        {
+        	_StdOut.putText("Gracias Dios Basado");   
+        };
+         
         return Shell;
     })();
     TSOS.Shell = Shell;

@@ -77,14 +77,21 @@ module TSOS {
             
             // #DATE GOES HERE
             sc = new ShellCommand(this.shellDate,
-            					"Date",
+            					"date",
             					"- Displays the date & time.");
             this.commandList[this.commandList.length] = sc;
 
 		     // #WHERE AM I
 		     sc = new ShellCommand(this.shellWhereAmI,
-								"Where Am I",
+								"where am i",
 								"- Displays the current location.");
+			this.commandList[this.commandList.length] = sc;
+			
+			
+			// #QUOTE
+			sc = new ShellCommand(this.shellRandomQuote,
+								"randomQuote ",
+								"- Displays a Random #based quote");
 			this.commandList[this.commandList.length] = sc;
 
             // processes - list the running processes and their IDs
@@ -289,6 +296,13 @@ module TSOS {
          {
          	_StdOut.putText("Location received, Deploying Task Force. Stay Positive - Lil B");
          };
+         
+         
+         Shell.prototype.shellRandomQuote = = function (args)
+         {
+         	_StdOut.putText("Gracias Dios Basado");
+         };
+         
          return Shell;
 
         public shellRot13(args) {
