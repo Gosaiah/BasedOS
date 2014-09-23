@@ -5,7 +5,6 @@
 // Read more about Gulp: http://gulpjs.com/
 //
 var gulp = require('gulp');
-
 // This is a Gulp Plugin for TypeScript.
 var typescript = require('gulp-tsc');
 

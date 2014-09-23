@@ -74,6 +74,15 @@ module TSOS {
                                   "prompt",
                                   "<string> - Sets the prompt.");
             this.commandList[this.commandList.length] = sc;
+            
+            // DATE GOES HERE
+            sc = new TSOS.ShellCommand(this.shellDate, "Date", "<string> - Displays the date & time.");
+            this.commandList[this.commandList.length] = sc;
+            
+            
+            //WHERE AM I
+            sc = new ShellCommand(this.shellWhereAmI, "Where Am I","- Displays your location.");
+			this.commandList[this.commandList.length] = sc;
 
             // processes - list the running processes and their IDs
             // kill <id> - kills the specified process id.
@@ -261,6 +270,17 @@ module TSOS {
                 _StdOut.putText("Usage: trace <on | off>");
             }
         }
+        
+        Shell.prototype.shellDate = function (args) 
+        {
+        	var now = new Date();_StdOut.putText(now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
+        };
+        
+         Shell.prototype.shellWhereAmI = function (args) 
+         {
+         	_StdOut.putText("Location received, Deploying Task Force. Stay Positive - Lil B");
+         };
+         return Shell;
 
         public shellRot13(args) {
             if (args.length > 0) {
