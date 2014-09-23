@@ -75,13 +75,16 @@ module TSOS {
                                   "<string> - Sets the prompt.");
             this.commandList[this.commandList.length] = sc;
             
-            // DATE GOES HERE
-            sc = new TSOS.ShellCommand(this.shellDate, "Date", "<string> - Displays the date & time.");
+            // #DATE GOES HERE
+            sc = new ShellCommand(this.shellDate,
+            					"Date",
+            					"- Displays the date & time.");
             this.commandList[this.commandList.length] = sc;
-            
-            
-            //WHERE AM I
-            sc = new ShellCommand(this.shellWhereAmI, "Where Am I","- Displays your location.");
+
+		     // #WHERE AM I
+		     sc = new ShellCommand(this.shellWhereAmI,
+								"Where Am I",
+								"- Displays the current location.");
 			this.commandList[this.commandList.length] = sc;
 
             // processes - list the running processes and their IDs
@@ -273,7 +276,13 @@ module TSOS {
         
         Shell.prototype.shellDate = function (args) 
         {
-        	var now = new Date();_StdOut.putText(now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
+        	var now = new Date();
+        	_StdOut.putText(now.getFullYear() + "-" + 
+        					(now.getMonth() + 1) + "-" + 
+        					now.getDate() + " " + 
+        					now.getHours() + ":" + 
+        					now.getMinutes() + ":" + 
+        					now.getSeconds());
         };
         
          Shell.prototype.shellWhereAmI = function (args) 
