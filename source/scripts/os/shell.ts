@@ -267,6 +267,11 @@ module TSOS {
             _StdOut.putText("Forget you! where the heck am i?!?! And why am i still not on FoxNet -_-");
         }
 
+        public shellPortalCake(args)
+        {
+            _StdOut.putText("Actually, the Cake is in fact very real and not a lie at all. Man, i'm hungry >_>");
+        }
+
         public shellTrace(args) {
             if (args.length > 0) {
                 var setting = args[0];

@@ -77,9 +77,19 @@ var TSOS;
         };
 
         Console.prototype.advanceLine = function () {
-            this.currentXPosition = 0;
-            this.currentYPosition += _DefaultFontSize + _FontHeightMargin;
             // TODO: Handle scrolling. (Project 1)
+            var yPos = _DefaultFontSize + _FontHeightMargin;
+            if (this.currentYPosition >= _Canvas.height - yPos) {
+                var cHeight = _Canvas.height;
+                var cWidth = _Canvas.width;
+                var pixels = _DrawingContext.getImageData(0, _DefaultFontSize + _FontHeightMargin, cWidth, cHeight);
+                this.clearScreen;
+                _DrawingContext.putImageData(pixels, 0, 0);
+                this.currentXPosition = 0;
+            } else {
+                this.currentXPosition = 0;
+                this.currentYPosition += _DefaultFontSize + _FontHeightMargin;
+            }
         };
         return Console;
     })();
