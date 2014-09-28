@@ -75,6 +75,24 @@ module TSOS {
                                   "<string> - Sets the prompt.");
             this.commandList[this.commandList.length] = sc;
 
+            // date
+            sc = new ShellCommand(this.shellDate,
+                                    "date",
+                                    "- Displays the date and time.");
+            this.commandList[this.commandList.length] = sc;
+
+            // whereami
+            sc = new ShellCommand(this.shellWhereAmI,
+                                    "whereami",
+                                    "- Displays the location.");
+            this.commandList[this.commandList.length] = sc;
+
+            // Cake is a Lie?
+            sc = new shellCommand(this.shellPortalCake,
+                                    "PortalCake",
+                                    "- Displays if the cake is in fact a lie..");
+            this.commandList[this.commandList.length] = sc;
+
             // processes - list the running processes and their IDs
             // kill <id> - kills the specified process id.
 
@@ -235,6 +253,18 @@ module TSOS {
             } else {
                 _StdOut.putText("Usage: man <topic>  Please supply a topic.");
             }
+        }
+
+        /*public shellDate(args)
+        {
+            var now = new Date();
+            _StdOut.putText(now.getMonth
+                
+        }*/
+
+        public shellWhereAmI(args) 
+        {
+            _StdOut.putText("Forget you! where the heck am i?!?! And why am i still not on FoxNet -_-");
         }
 
         public shellTrace(args) {
