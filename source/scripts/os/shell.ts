@@ -75,6 +75,12 @@ module TSOS {
                                   "<string> - Sets the prompt.");
             this.commandList[this.commandList.length] = sc;
 
+            //status
+            sc = new shellCommand(this.shellStatus,
+                                    "status",
+                                    "<string> - Sets the status");
+            this.commandList[this.commandList.length] = sc;
+
             // date
             sc = new ShellCommand(this.shellDate,
                                     "date",
@@ -87,7 +93,7 @@ module TSOS {
                                     "- Displays the location.");
             this.commandList[this.commandList.length] = sc;
 
-            // Cake is a Lie?
+            // portal - Cake is a Lie?
             sc = new shellCommand(this.shellPortal,
                                     "portal",
                                     "- Displays if the cake is in fact a lie..");
@@ -255,6 +261,18 @@ module TSOS {
             }
         }
 
+        public shellStatus(args)
+        {
+            if (args.length > 0)
+            {
+                STATUS = args[0];
+            }
+            else
+            {
+                _StdOut.putText("Please supply a string. -> status <string>");
+            }
+        }
+
         /*public shellDate(args)
         {
             var now = new Date();
@@ -271,6 +289,7 @@ module TSOS {
         {
             _StdOut.putText("Actually, the Cake is in fact very real and not a lie at all. Man, i'm hungry >_>");
         }
+
 
         public shellTrace(args) {
             if (args.length > 0) {

@@ -53,6 +53,10 @@ var TSOS;
             sc = new TSOS.ShellCommand(this.shellPrompt, "prompt", "<string> - Sets the prompt.");
             this.commandList[this.commandList.length] = sc;
 
+            //status
+            sc = new shellCommand(this.shellStatus, "status", "<string> - Sets the status");
+            this.commandList[this.commandList.length] = sc;
+
             // date
             sc = new TSOS.ShellCommand(this.shellDate, "date", "- Displays the date and time.");
             this.commandList[this.commandList.length] = sc;
@@ -61,8 +65,8 @@ var TSOS;
             sc = new TSOS.ShellCommand(this.shellWhereAmI, "whereami", "- Displays the location.");
             this.commandList[this.commandList.length] = sc;
 
-            // Cake is a Lie?
-            sc = new shellCommand(this.shellPortalCake, "PortalCake", "- Displays if the cake is in fact a lie..");
+            // portal - Cake is a Lie?
+            sc = new shellCommand(this.shellPortal, "portal", "- Displays if the cake is in fact a lie..");
             this.commandList[this.commandList.length] = sc;
 
             // processes - list the running processes and their IDs
@@ -234,6 +238,14 @@ var TSOS;
             }
         };
 
+        Shell.prototype.shellStatus = function (args) {
+            if (args.length > 0) {
+                STATUS = args[0];
+            } else {
+                _StdOut.putText("Please supply a string. -> status <string>");
+            }
+        };
+
         /*public shellDate(args)
         {
         var now = new Date();
@@ -242,6 +254,10 @@ var TSOS;
         }*/
         Shell.prototype.shellWhereAmI = function (args) {
             _StdOut.putText("Forget you! where the heck am i?!?! And why am i still not on FoxNet -_-");
+        };
+
+        Shell.prototype.shellPortal = function (args) {
+            _StdOut.putText("Actually, the Cake is in fact very real and not a lie at all. Man, i'm hungry >_>");
         };
 
         Shell.prototype.shellTrace = function (args) {

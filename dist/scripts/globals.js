@@ -10,7 +10,8 @@ Operating System Concepts 8th edition by Silberschatz, Galvin, and Gagne.  ISBN 
 // TODO: Make a global object and use that instead of the "_" naming convention in the global namespace.
 //
 var APP_NAME = "CakeOS";
-var APP_VERSION = "9.28";
+var APP_VERSION = "9.29";
+var STATUS = "Enter command: status <string> to change your status";
 
 var CPU_CLOCK_INTERVAL = 100;
 

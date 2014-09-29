@@ -33,6 +33,11 @@ var TSOS;
             var chr = "";
 
             // Check to see if we even want to deal with the key that was pressed.
+            // Check for backspace or Tab
+            if (keyCode == 8) {
+                chr = String.fromCharCode(keyCode);
+                _KernelInputQueue.enqueue(chr);
+            }
             if (((keyCode >= 65) && (keyCode <= 90)) || ((keyCode >= 97) && (keyCode <= 123))) {
                 // Determine the character we want to display.
                 // Assume it's lowercase...
@@ -45,9 +50,65 @@ var TSOS;
 
                 // TODO: Check for caps-lock and handle as shifted if so.
                 _KernelInputQueue.enqueue(chr);
-            } else if (((keyCode >= 48) && (keyCode <= 57)) || (keyCode == 32) || (keyCode == 13)) {
-                chr = String.fromCharCode(keyCode);
-                _KernelInputQueue.enqueue(chr);
+            } else {
+                if (((keyCode >= 48) && (keyCode <= 57)) || (keyCode == 32) || (keyCode == 13)) {
+                    if (isShifted && ((keyCode >= 48) && (keyCode <= 57))) {
+                        switch (keyCode) {
+                            case 48:
+                                // )
+                                keyCode = 41;
+                                break;
+
+                            case 49:
+                                // !
+                                keyCode = 33;
+                                break;
+                            case 50:
+                                // @
+                                keyCode = 64;
+                                break;
+
+                            case 51:
+                                // #
+                                keyCode = 35;
+                                break;
+                            case 52:
+                                // $
+                                keyCode = 36;
+                                break;
+
+                            case 53:
+                                // %
+                                keyCode = 37;
+                                break;
+                            case 54:
+                                // ^
+                                keyCode = 94;
+                                break;
+
+                            case 55:
+                                // &
+                                keyCode = 33;
+                                break;
+                            case 56:
+                                // *
+                                keyCode = 42;
+                                break;
+
+                            case 57:
+                                // (
+                                keyCode = 40;
+                                break;
+                            default:
+                                keyCode = keyCode;
+                                break;
+                        }
+                    }
+                    chr = String.fromCharCode(keyCode);
+                    _KernelInputQueue.enqueue(chr);
+                } else {
+                    // punctuation marks
+                }
             }
         };
         return DeviceDriverKeyboard;
