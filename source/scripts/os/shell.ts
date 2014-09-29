@@ -88,8 +88,8 @@ module TSOS {
             this.commandList[this.commandList.length] = sc;
 
             // Cake is a Lie?
-            sc = new shellCommand(this.shellPortalCake,
-                                    "PortalCake",
+            sc = new shellCommand(this.shellPortal,
+                                    "portal",
                                     "- Displays if the cake is in fact a lie..");
             this.commandList[this.commandList.length] = sc;
 
@@ -267,7 +267,7 @@ module TSOS {
             _StdOut.putText("Forget you! where the heck am i?!?! And why am i still not on FoxNet -_-");
         }
 
-        public shellPortalCake(args)
+        public shellPortal(args)
         {
             _StdOut.putText("Actually, the Cake is in fact very real and not a lie at all. Man, i'm hungry >_>");
         }
@@ -313,6 +313,8 @@ module TSOS {
                 _StdOut.putText("Usage: prompt <string>  Please supply a string.");
             }
         }
+
+
 
     }
 }
