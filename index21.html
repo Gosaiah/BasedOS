@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1"> 
+		<title>CakeOS - a browser-based virtual Operating System in TypeScript</title>
+		<meta name="description" content="Fullscreen Form Interface: A distraction-free form concept with fancy animations" />
+		<meta name="keywords" content="fullscreen form, css animations, distraction-free, web design" />
+		<meta name="author" content="Codrops" />
+		<link rel="shortcut icon" href="../favicon.ico">
+		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="css/component.css" />
+		<link rel="stylesheet" type="text/css" href="css/component2.css" />
+		<link rel="shortcut icon" href="../favicon.ico">
+
+		<script src="js/modernizr.custom2.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/cs-select.css" />
+		<link rel="stylesheet" type="text/css" href="css/cs-skin-boxes.css" />
+		<link rel="stylesheet" href="dist/styles/tsos2.css" type="text/css" media="screen" />
+		<script src="js/modernizr.custom.js"></script>
+		<!-- Globals CONSTANTS and _Variables. Must included be first. -->
+	   <script type="text/javascript" src="dist/scripts/globals.js"></script>
+
+	   <!-- Host (Hardware Simulation) Routines -->
+	   <script type="text/javascript" src="dist/scripts/host/control.js"></script>
+	   <script type="text/javascript" src="dist/scripts/host/devices.js"></script>
+	   <script type="text/javascript" src="dist/scripts/host/cpu.js"></script>
+
+	   <!-- Virtual OS Routines: Make sure Kernel code is last, since it needs those above it. -->
+	   <script type="text/javascript" src="dist/scripts/os/interrupt.js"></script>
+	   <script type="text/javascript" src="dist/scripts/os/canvastext.js"></script>
+	   <script type="text/javascript" src="dist/scripts/os/console.js"></script>
+	   <script type="text/javascript" src="dist/scripts/os/deviceDriver.js"></script>
+	   <script type="text/javascript" src="dist/scripts/os/deviceDriverKeyboard.js"></script>
+	   <script type="text/javascript" src="dist/scripts/os/queue.js"></script>
+	   <script type="text/javascript" src="dist/scripts/os/shell.js"></script>
+	   <script type="text/javascript" src="dist/scripts/os/shellCommand.js"></script>
+	   <script type="text/javascript" src="dist/scripts/os/userCommand.js"></script>
+	   <script type="text/javascript" src="dist/scripts/os/kernel.js"></script>
+
+	   <!-- Other Routines -->
+	   <script type="text/javascript" src="dist/scripts/utils.js"></script>
+	   <!-- Uncomment this line below to enable Glados testing -->
+	   <!-- <script type="text/javascript" src="http://www.labouseur.com/courses/os/projects/glados.js"></script> -->
+	</head>
+	<body>
+		<div class="container">
+			<div id="divButtonBar" style="margin:4px;">
+         	</div>
+         	<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
+         		<h3>Host Log</h3>
+				   	<label>
+				   		<textarea 
+							name="taHostLog"
+							id  ="taHostLog"
+						   	rows="26"
+						   	cols="48">           
+					   </textarea>
+					</label>
+					<label>
+					<h3>User Program Input</h3>
+						<textarea 
+							name="taProgramInput"
+							id  ="taProgramInput"
+							rows="8"
+							cols="48">
+						</textarea>
+					</label>
+				</nav>
+			<div> <!-- class="fs-form-wrap" id="fs-form-wrap" -->
+				<div class="fs-title">
+					<h1>Project Worksheet</h1>
+					
+					<div class="codrops-top">
+						<button id="showRight">Show/Hide Right Slide Menu</button>
+						<input type="button"
+					           id = "btnStartOS"
+					           name="brnStartOS"
+					           class="normal_button"
+					           value="Start"
+					           tabindex="0"
+					           onclick="TSOS.Control.hostBtnStartOS_click(this);">
+
+			             <input type="button"
+					            id = "btnHaltOS"
+					            name="brnHaltOS"
+					            class="normal_button"
+					            disabled="disabled"
+					            value="Halt"
+					            tabindex="1"
+					            onclick="TSOS.Control.hostBtnHaltOS_click(this);">
+
+					      <input type="button"
+					             id = "btnReset"
+					             name="brnReset"
+					             class="normal_button"
+					             disabled="disabled"
+					             value="Reset"
+					             tabindex="2"
+					             onclick="TSOS.Control.hostBtnReset_click(this);">
+						<a class="codrops-icon codrops-icon-prev" href="http://tympanus.net/Development/NotificationStyles/">
+							<span>Previous Demo</span></a>
+						<a class="codrops-icon codrops-icon-drop" href="http://tympanus.net/codrops/?p=19520">
+							<span>Back to the Codrops Article</span></a>
+						<a class="codrops-icon codrops-icon-info" href="#">
+							<span>This is a demo for a fullscreen form</span></a>
+					</div>
+					<div id="test">
+						<form id="myform" class="fs-form fs-form-full" autocomplete="off">
+							<ol class="fs-fields">
+								 <div id="divConsole" style="margin:4px; width:500px; height:500px; float:left;">
+								 	<canvas id="display" width="800px" height="100px" tabindex="3">
+								 	</canvas>
+								 </div>
+							</ol>
+						</form>
+					</div>
+				</div>	
+			</div><!-- /container -->
+		<script src="js/classie.js"></script>
+		<script src="js/selectFx.js"></script>
+		<script src="js/fullscreenForm.js"></script>
+		<!-- Classie - class helper functions by @desandro https://github.com/desandro/classie -->
+		<script src="js/classie.js"></script>
+		<script>
+			var menuRight = document.getElementById( 'cbp-spmenu-s2' ),
+				body = document.body;
+
+			showRight.onclick = function() {
+				classie.toggle( this, 'active' );
+				classie.toggle( menuRight, 'cbp-spmenu-open' );
+				disableOther( 'showRight' );
+			};
+		</script>
+	</body>
+</html>
