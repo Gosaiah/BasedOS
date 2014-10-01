@@ -62,7 +62,7 @@ var TSOS;
             this.commandList[this.commandList.length] = sc;
 
             // Cake is a Lie?
-            sc = new shellCommand(this.shellPortalCake, "PortalCake", "- Displays if the cake is in fact a lie..");
+            sc = new TSOS.ShellCommand(this.shellPortal, "portal", "- Displays if the cake is in fact a lie..");
             this.commandList[this.commandList.length] = sc;
 
             // processes - list the running processes and their IDs
@@ -242,6 +242,10 @@ var TSOS;
         }*/
         Shell.prototype.shellWhereAmI = function (args) {
             _StdOut.putText("Forget you! where the heck am i?!?! And why am i still not on FoxNet -_-");
+        };
+
+        Shell.prototype.shellPortal = function (args) {
+            _StdOut.putText("Actually, the Cake is in fact very real and not a lie at all. Man, i'm hungry >_>");
         };
 
         Shell.prototype.shellTrace = function (args) {
