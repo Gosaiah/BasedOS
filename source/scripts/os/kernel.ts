@@ -171,6 +171,10 @@ module TSOS {
             Control.hostLog("OS ERROR - TRAP: " + msg);
             // TODO: Display error on console, perhaps in some sort of colored screen. (Perhaps blue?)
             this.krnShutdown();
+            //after shutdown, draw new image for BSOD
+             /*var bsod;
+             bsod = document.getElementById("blueScreenOfDeath");
+             _DrawingContext.drawImage(blueScreenOfDeath, 0,0,500,500);*/
         }
     }
 }

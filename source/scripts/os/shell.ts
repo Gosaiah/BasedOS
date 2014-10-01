@@ -273,6 +273,15 @@ module TSOS {
             _StdOut.putText("Actually, the Cake is in fact very real and not a lie at all. Man, i'm hungry >_>");
         }
 
+        /*
+        public shellBlueScreenOfDeath(args)
+        {
+            _StdOut.putText("Calling TaskForce, Fake Based confirmed");
+            // kernal trap - on exception
+            _Kernel.krnTrapError("Fake Based confirmed. We will pray for your enlightenment - #ThankYouBasedGod");
+        }
+        */
+
         public shellTrace(args) {
             if (args.length > 0) {
                 var setting = args[0];
