@@ -93,6 +93,14 @@ module TSOS {
                                     "- Displays if the cake is in fact a lie..");
             this.commandList[this.commandList.length] = sc;
             
+            // Based (blue) Screen of Death
+            /*
+            sc = new ShellCommand(this.shellBlueScreenOfDeath,
+                                    "fakeBased",
+                                    "- Displays Based (blue) screen of death..");
+            this.commandList[this.commandList.length] = sc;
+            */
+
 
             // processes - list the running processes and their IDs
             // kill <id> - kills the specified process id.
@@ -272,6 +280,15 @@ module TSOS {
         {
             _StdOut.putText("Actually, the Cake is in fact very real and not a lie at all. Man, i'm hungry >_>");
         }
+
+        /*
+        public shellBlueScreenOfDeath(args)
+        {
+            _StdOut.putText("Calling TaskForce, Fake Based confirmed");
+            // kernal trap - on exception
+            _Kernel.krnTrapError("Fake Based confirmed. We will pray for your enlightenment - #ThankYouBasedGod");
+        }
+        */
 
         public shellTrace(args) {
             if (args.length > 0) {
