@@ -48,19 +48,12 @@ var TSOS;
                     // ... and reset our buffer.
                     this.buffer = "";
                 } else {
-                    if (chr === String.fromCharCode(8)) {
-                        //backspace
-                        var charRemove = this.buffer.charAt(this.buffer.length - 1);
-                        this.buffer = this.buffer.substring(0, this.buffer.length - 1);
-                        this.backspace(charRemove);
-                    } else {
-                        // This is a "normal" character, so ...
-                        // ... draw it on the screen...
-                        this.putText(chr);
+                    // This is a "normal" character, so ...
+                    // ... draw it on the screen...
+                    this.putText(chr);
 
-                        // ... and add it to our buffer.
-                        this.buffer += chr;
-                    }
+                    // ... and add it to our buffer.
+                    this.buffer += chr;
                 }
                 // TODO: Write a case for Ctrl-C.
             }
@@ -96,17 +89,6 @@ var TSOS;
             } else {
                 this.currentXPosition = 0;
                 this.currentYPosition += _DefaultFontSize + _FontHeightMargin;
-            }
-        };
-
-        Console.prototype.backspace = function (text) {
-            var lenghtOfChar = _DrawingContext.measureText(this.currentFont, this.currentFontSize, text);
-            var heightY = _DefaultFontSize + _FontHeightMargin;
-            _DrawingContext.clearRect(this.currentXPosition - lenghtOfChar, ((this.currentYPosition - heightY) + 5), lenghtOfChar, heightY);
-
-            // if theres text, bring it back
-            if (this.currentXPosition > 0) {
-                this.currentXPosition = this.currentXPosition - lenghtOfChar;
             }
         };
         return Console;

@@ -53,10 +53,6 @@ var TSOS;
             sc = new TSOS.ShellCommand(this.shellPrompt, "prompt", "<string> - Sets the prompt.");
             this.commandList[this.commandList.length] = sc;
 
-            // status
-            sc = new TSOS.ShellCommand(this.shellUpdateStatus, "status", "<string> - Updates the Status");
-            this.commandList[this.commandList.length] = sc;
-
             // date
             sc = new TSOS.ShellCommand(this.shellDate, "date", "- Displays the date and time.");
             this.commandList[this.commandList.length] = sc;
@@ -235,14 +231,6 @@ var TSOS;
                 }
             } else {
                 _StdOut.putText("Usage: man <topic>  Please supply a topic.");
-            }
-        };
-
-        Shell.prototype.shellUpdateStatus = function (args) {
-            if (args.length > 0) {
-                STATUS = args[0];
-            } else {
-                _StdOut.putText("Usage: status <string>  Please supply a string");
             }
         };
 
