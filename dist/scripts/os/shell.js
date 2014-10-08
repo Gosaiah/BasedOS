@@ -54,7 +54,7 @@ var TSOS;
             this.commandList[this.commandList.length] = sc;
 
             // status
-            sc = new TSOS.ShellCommand(this.shellUpdateStatus, "status", "<string> - Updates the Status");
+            sc = new TSOS.ShellCommand(this.shellStatus, "status", "<string> - Updates the Status");
             this.commandList[this.commandList.length] = sc;
 
             // date
@@ -238,7 +238,7 @@ var TSOS;
             }
         };
 
-        Shell.prototype.shellUpdateStatus = function (args) {
+        Shell.prototype.shellStatus = function (args) {
             if (args.length > 0) {
                 STATUS = args[0];
             } else {

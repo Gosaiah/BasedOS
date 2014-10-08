@@ -76,7 +76,7 @@ module TSOS {
             this.commandList[this.commandList.length] = sc;
 
             // status
-            sc = new ShellCommand(this.shellUpdateStatus,
+            sc = new ShellCommand(this.shellStatus,
                                         "status",
                                         "<string> - Updates the Status");
             this.commandList[this.commandList.length] = sc;
@@ -262,7 +262,7 @@ module TSOS {
             }
         }
 
-        public shellUpdateStatus(args)
+        public shellStatus(args)
         {
             if(args.length > 0)
             {
