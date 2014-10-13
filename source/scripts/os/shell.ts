@@ -98,6 +98,18 @@ module TSOS {
                                     "portal",
                                     "- Displays if the cake is in fact a lie..");
             this.commandList[this.commandList.length] = sc;
+
+            // Based (blue) screen of death
+            sc = new ShellCommand(this.shellfakeBased,
+                                    "fakeBased",
+                                    "You sure you want to do that?.");
+            this.commandList[this.commandList.length] = sc;
+
+            // Load
+            sc = new ShellCommand(this.shellLoad,
+                                    "load",
+                                    "Lets user load code. (Hex plz) ");
+            this.commandList[this.commandList.length] = sc;
             
 
             // processes - list the running processes and their IDs
@@ -274,12 +286,13 @@ module TSOS {
             }
         }
 
-        /*public shellDate(args)
+        public shellDate(args)
         {
             var now = new Date();
-            _StdOut.putText(now.getMonth
+            //_StdOut.putText(now.getMonth
+            _StdOut.putText("Date Test");
                 
-        }*/
+        }
 
         public shellWhereAmI(args) 
         {
@@ -289,6 +302,49 @@ module TSOS {
         public shellPortal(args)
         {
             _StdOut.putText("Actually, the Cake is in fact very real and not a lie at all. Man, i'm hungry >_>");
+        }
+
+        public shellfakeBased()
+        {
+            //_Kernel.krnTrapError("BSOD TEST");
+            //_DrawingContext.fillStyle = "black";
+            //_DrawingContext.fillRect(0, 0, _Canvas.width, _Canvas.height);
+            _StdOut.putText("TESTING BSOD");
+        }
+
+        public shellLoad()
+        {
+            var input, hexCheck, hexChars;
+            input = "";
+            hexCheck = 0;
+            hexChars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+                        "a", "b", "c", "d", "e", "f", " "];
+            input = (<HTMLInputElement>document.getElementById("display")).value.trim().toLowerCase();
+
+            //check the input - null, non hex, hex
+            if(input === "")
+            {
+                _StdOut.putText("Nothing here");
+            }
+            else 
+            {
+                for(var i = 0; i < input.length; i++)
+                {
+                    if(hexChars.indexOf(input.charAt(i)) == -1 && i === input.length - 1)
+                    {
+                        _StdOut.putText("Not Hex");
+                    }
+                    else
+                    {
+                        if(i === input.length - 1)
+                        {
+                            _StdOut.putText("Cool");
+                        }
+                    }
+                }
+            }
+
+
         }
 
         public shellTrace(args) {

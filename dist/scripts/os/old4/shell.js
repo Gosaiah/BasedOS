@@ -69,11 +69,6 @@ var TSOS;
             sc = new TSOS.ShellCommand(this.shellPortal, "portal", "- Displays if the cake is in fact a lie..");
             this.commandList[this.commandList.length] = sc;
 
-            // Based (blue) screen of death
-            sc = new TSOS.ShellCommand(this.shellfakeBased, "fakeBased", "You sure you want to do that?.");
-            this.commandList[this.commandList.length] = sc;
-
-            // Load
             sc = new TSOS.ShellCommand(this.shellLoad, "load", "Lets user load code. (Hex plz) ");
             this.commandList[this.commandList.length] = sc;
 
@@ -267,12 +262,6 @@ var TSOS;
 
         Shell.prototype.shellPortal = function (args) {
             _StdOut.putText("Actually, the Cake is in fact very real and not a lie at all. Man, i'm hungry >_>");
-        };
-
-        Shell.prototype.shellfakeBased = function () {
-            _Kernel.krnTrapError("BSOD TEST");
-            _DrawingContext.fillStyle = "black";
-            _DrawingContext.fillRect(0, 0, _Canvas.width, _Canvas.height);
         };
 
         Shell.prototype.shellLoad = function () {

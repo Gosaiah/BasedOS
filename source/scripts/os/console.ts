@@ -95,9 +95,11 @@ module TSOS
                         {
                             if(chr == "upArrow")
                             {
+
                                 if(this.historyIndex > 0)
                                 {
-                                    var pastCommands = this.history[this.historyIndex - 1];
+                                    var tempHistLen= this.history.length - 1;
+                                    var pastCommands = this.history[tempHistLen];
                                     this.replaceBuffer(PastCommands);
                                     this.historyIndex = this.historyIndex -1;
                                 }
@@ -106,7 +108,7 @@ module TSOS
                             {
                                 if(chr == "downArrow")
                                 {
-                                    var tempHistLen= history.length - 1;
+                                    var tempHistLen= this.history.length - 1;
                                     if(this.historyIndex < tempHistLen)
                                     {
                                         var pastCommands = this.history[this.historyIndex + 1];
@@ -151,6 +153,7 @@ module TSOS
         public advanceLine(): void 
         {
             // TODO: Handle scrolling. (Project 1)
+            
             var yPos = _DefaultFontSize + _FontHeightMargin;
             if (this.currentYPosition >= _Canvas.height - yPos)
             {
@@ -166,14 +169,16 @@ module TSOS
                this.currentXPosition = 0;
                this.currentYPosition += _DefaultFontSize + _FontHeightMargin; 
             }
+            
         }
 
         public backspace(text): void
         {
+            //get the height/width of the character being removed -> redraw the content without that character
             var lenghtOfChar = _DrawingContext.measureText(this.currentFont, this.currentFontSize, text);
             var heightY = _DefaultFontSize + _FontHeightMargin;
             _DrawingContext.clearRect(this.currentXPosition - lenghtOfChar, ((this.currentYPosition - heightY) + 5), lenghtOfChar, heightY);
-            // if theres text, bring it back
+            // if theres text, bring it back and update our x position
             if(this.currentXPosition > 0)
             {
                 this.currentXPosition = this.currentXPosition - lenghtOfChar;
