@@ -50,6 +50,9 @@ module TSOS {
             // Use the TypeScript cast to HTMLInputElement
             (<HTMLInputElement> document.getElementById("taHostLog")).value="";
 
+            //Get the program input button
+            _ProgramInput = <HTMLTextAreaElement>document.getElementById("taProgramInput");
+
             // Set focus on the start button.
             // Use the TypeScript cast to HTMLInputElement
             (<HTMLInputElement> document.getElementById("btnStartOS")).focus();
