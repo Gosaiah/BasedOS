@@ -114,14 +114,13 @@ module TSOS
                                             this.historyIndex = this.historyIndex + 1;
                                         }
                                     }
-                                else 
-                                {
-                                    // This is a "normal" character, so ...
-                                    // ... draw it on the screen...
-                                    this.putText(chr);
-                                    // ... and add it to our buffer.
-                                    this.buffer += chr;
-                                }
+                                else {
+                                        // This is a "normal" character, so ...
+                                        // ... draw it on the screen...
+                                        this.putText(chr);
+                                        // ... and add it to our buffer.
+                                        this.buffer += chr;
+                                    }
                             }
                         }
                     }
