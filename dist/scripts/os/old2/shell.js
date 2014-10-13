@@ -52,18 +52,9 @@ var TSOS;
             // prompt <string>
             sc = new TSOS.ShellCommand(this.shellPrompt, "prompt", "<string> - Sets the prompt.");
             this.commandList[this.commandList.length] = sc;
-            
-            // DATE GOES HERE
-            sc = new TSOS.ShellCommand(this.shellDate, "Date", "<string> - Displays the date & time.");
-            this.commandList[this.commandList.length] = sc;
-            
-            
-            //WHERE AM I
-            sc = new ShellCommand(this.shellWhereAmI, "Where Am I","- Displays your location.");
-			this.commandList[this.commandList.length] = sc;
 
             // status
-            sc = new TSOS.ShellCommand(this.shellStatus, "status", "<string> - Updates the Status");
+            sc = new TSOS.ShellCommand(this.shellUpdateStatus, "status", "<string> - Updates the Status");
             this.commandList[this.commandList.length] = sc;
 
             // date
@@ -76,14 +67,6 @@ var TSOS;
 
             // Cake is a Lie?
             sc = new TSOS.ShellCommand(this.shellPortal, "portal", "- Displays if the cake is in fact a lie..");
-            this.commandList[this.commandList.length] = sc;
-
-            // Based (blue) screen of death
-            sc = new TSOS.ShellCommand(this.shellfakeBased, "fakeBased", "You sure you want to do that?.");
-            this.commandList[this.commandList.length] = sc;
-
-            // Load
-            sc = new TSOS.ShellCommand(this.shellLoad, "load", "Lets user load code. (Hex plz) ");
             this.commandList[this.commandList.length] = sc;
 
             // processes - list the running processes and their IDs
@@ -216,7 +199,7 @@ var TSOS;
         };
 
         Shell.prototype.shellVer = function (args) {
-            _StdOut.putText(APP_NAME + " myVersion " + APP_VERSION);
+            _StdOut.putText(APP_NAME + " version " + APP_VERSION);
         };
 
         Shell.prototype.shellHelp = function (args) {
@@ -255,7 +238,7 @@ var TSOS;
             }
         };
 
-        Shell.prototype.shellStatus = function (args) {
+        Shell.prototype.shellUpdateStatus = function (args) {
             if (args.length > 0) {
                 STATUS = args[0];
             } else {
@@ -263,50 +246,18 @@ var TSOS;
             }
         };
 
-        Shell.prototype.shellDate = function (args) {
-            var now = new Date();
-
-            //_StdOut.putText(now.getMonth
-            _StdOut.putText("Date Test");
-        };
-
+        /*public shellDate(args)
+        {
+        var now = new Date();
+        _StdOut.putText(now.getMonth
+        
+        }*/
         Shell.prototype.shellWhereAmI = function (args) {
             _StdOut.putText("Forget you! where the heck am i?!?! And why am i still not on FoxNet -_-");
         };
 
         Shell.prototype.shellPortal = function (args) {
             _StdOut.putText("Actually, the Cake is in fact very real and not a lie at all. Man, i'm hungry >_>");
-        };
-
-        Shell.prototype.shellfakeBased = function () {
-            _Kernel.krnTrapError("BSOD TEST");
-            _DrawingContext.fillStyle = "black";
-            _DrawingContext.fillRect(0, 0, _Canvas.width, _Canvas.height);
-        };
-
-        Shell.prototype.shellLoad = function () {
-            var input, hexCheck, hexChars;
-            input = "";
-            hexCheck = 0;
-            hexChars = [
-                "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
-                "a", "b", "c", "d", "e", "f", " "];
-            input = document.getElementById("display").value.trim().toLowerCase();
-
-            //check the input - null, non hex, hex
-            if (input === "") {
-                _StdOut.putText("Nothing here");
-            } else {
-                for (var i = 0; i < input.length; i++) {
-                    if (hexChars.indexOf(input.charAt(i)) == -1 && i === input.length - 1) {
-                        _StdOut.putText("Not Hex");
-                    } else {
-                        if (i === input.length - 1) {
-                            _StdOut.putText("Cool");
-                        }
-                    }
-                }
-            }
         };
 
         Shell.prototype.shellTrace = function (args) {
@@ -350,22 +301,6 @@ var TSOS;
                 _StdOut.putText("Usage: prompt <string>  Please supply a string.");
             }
         };
-        
-        Shell.prototype.shellDate = function (args) 
-        {
-        	var now = new Date();_StdOut.putText(now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
-        };
-            
-        Shell.prototype.shellWhereAmI = function (args) 
-         {
-         	_StdOut.putText("Location received, Deploying Task Force. Stay Positive - Lil B");
-         };
-         
-        Shell.prototype.shellRandomQuote = function (args)
-        {
-        	_StdOut.putText("Gracias Dios Basado");   
-        };
-         
         return Shell;
     })();
     TSOS.Shell = Shell;

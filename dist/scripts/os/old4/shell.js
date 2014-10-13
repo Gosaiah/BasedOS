@@ -52,15 +52,6 @@ var TSOS;
             // prompt <string>
             sc = new TSOS.ShellCommand(this.shellPrompt, "prompt", "<string> - Sets the prompt.");
             this.commandList[this.commandList.length] = sc;
-            
-            // DATE GOES HERE
-            sc = new TSOS.ShellCommand(this.shellDate, "Date", "<string> - Displays the date & time.");
-            this.commandList[this.commandList.length] = sc;
-            
-            
-            //WHERE AM I
-            sc = new ShellCommand(this.shellWhereAmI, "Where Am I","- Displays your location.");
-			this.commandList[this.commandList.length] = sc;
 
             // status
             sc = new TSOS.ShellCommand(this.shellStatus, "status", "<string> - Updates the Status");
@@ -78,11 +69,6 @@ var TSOS;
             sc = new TSOS.ShellCommand(this.shellPortal, "portal", "- Displays if the cake is in fact a lie..");
             this.commandList[this.commandList.length] = sc;
 
-            // Based (blue) screen of death
-            sc = new TSOS.ShellCommand(this.shellfakeBased, "fakeBased", "You sure you want to do that?.");
-            this.commandList[this.commandList.length] = sc;
-
-            // Load
             sc = new TSOS.ShellCommand(this.shellLoad, "load", "Lets user load code. (Hex plz) ");
             this.commandList[this.commandList.length] = sc;
 
@@ -216,7 +202,7 @@ var TSOS;
         };
 
         Shell.prototype.shellVer = function (args) {
-            _StdOut.putText(APP_NAME + " myVersion " + APP_VERSION);
+            _StdOut.putText(APP_NAME + " version " + APP_VERSION);
         };
 
         Shell.prototype.shellHelp = function (args) {
@@ -276,12 +262,6 @@ var TSOS;
 
         Shell.prototype.shellPortal = function (args) {
             _StdOut.putText("Actually, the Cake is in fact very real and not a lie at all. Man, i'm hungry >_>");
-        };
-
-        Shell.prototype.shellfakeBased = function () {
-            _Kernel.krnTrapError("BSOD TEST");
-            _DrawingContext.fillStyle = "black";
-            _DrawingContext.fillRect(0, 0, _Canvas.width, _Canvas.height);
         };
 
         Shell.prototype.shellLoad = function () {
@@ -350,22 +330,6 @@ var TSOS;
                 _StdOut.putText("Usage: prompt <string>  Please supply a string.");
             }
         };
-        
-        Shell.prototype.shellDate = function (args) 
-        {
-        	var now = new Date();_StdOut.putText(now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
-        };
-            
-        Shell.prototype.shellWhereAmI = function (args) 
-         {
-         	_StdOut.putText("Location received, Deploying Task Force. Stay Positive - Lil B");
-         };
-         
-        Shell.prototype.shellRandomQuote = function (args)
-        {
-        	_StdOut.putText("Gracias Dios Basado");   
-        };
-         
         return Shell;
     })();
     TSOS.Shell = Shell;

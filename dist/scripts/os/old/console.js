@@ -84,17 +84,6 @@ var TSOS;
         };
 
         Console.prototype.advanceLine = function () {
-<<<<<<< HEAD
-            this.currentXPosition = 0;
-
-            /*
-            * Font size measures from the baseline to the highest point in the font.
-            * Font descent measures from the baseline to the lowest point in the font.
-            * Font height margin is extra spacing between the lines.
-            */
-            this.currentYPosition += _DefaultFontSize + _DrawingContext.fontDescent(this.currentFont, this.currentFontSize) + _FontHeightMargin;
-=======
->>>>>>> Test
             // TODO: Handle scrolling. (Project 1)
             var yPos = _DefaultFontSize + _FontHeightMargin;
             if (this.currentYPosition >= _Canvas.height - yPos) {
