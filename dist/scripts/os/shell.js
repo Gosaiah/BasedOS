@@ -69,6 +69,14 @@ var TSOS;
             sc = new TSOS.ShellCommand(this.shellPortal, "portal", "- Displays if the cake is in fact a lie..");
             this.commandList[this.commandList.length] = sc;
 
+            // BASED blue screen of death
+            sc = new shellCommand(this.Bsod, "fakeBased", "You sure you want to disrespect the BASEDGOD like that?");
+            this.commandList[this.commandList.length] = sc;
+
+            // Load
+            sc = new shellCommand(this.shellLoad, "load", "- Lets users load code from input area (Hex plz)");
+            this.commandList[this.commandList.length] = sc;
+
             // processes - list the running processes and their IDs
             // kill <id> - kills the specified process id.
             //
@@ -137,7 +145,10 @@ var TSOS;
             }
 
             // ... and finally write the prompt again.
-            this.putPrompt();
+            //this.putPrompt();
+            if (_DrawingContext.fillStyle != "0000ff") {
+                this.putPrompt();
+            }
         };
 
         Shell.prototype.parseInput = function (buffer) {
@@ -239,25 +250,57 @@ var TSOS;
         };
 
         Shell.prototype.shellStatus = function (args) {
-            if (args.length > 0) {
-                STATUS = args[0];
-            } else {
-                _StdOut.putText("Usage: status <string>  Please supply a string");
+            var input = args;
+            document.getElementById("status").innerHTML = input;
+            /*if(args.length > 0)
+            {
+            STATUS = args[0];
             }
+            else
+            {
+            _StdOut.putText("Usage: status <string>  Please supply a string");
+            }*/
         };
 
-        /*public shellDate(args)
-        {
-        var now = new Date();
-        _StdOut.putText(now.getMonth
-        
-        }*/
+        Shell.prototype.shellDate = function (args) {
+            //var now = new Date();
+            //_StdOut.putText(now.getMonth
+            _StdOut.putText("TESTING DATE");
+        };
+
         Shell.prototype.shellWhereAmI = function (args) {
             _StdOut.putText("Forget you! where the heck am i?!?! And why am i still not on FoxNet -_-");
         };
 
         Shell.prototype.shellPortal = function (args) {
             _StdOut.putText("Actually, the Cake is in fact very real and not a lie at all. Man, i'm hungry >_>");
+        };
+
+        Shell.prototype.shellBsod = function () {
+            _Kernel.krnTrapError("TESTTING");
+            _DrawingContext.fillStyle = "blue";
+            _DrawingContext.fillRect(0, 0, _Canvas.width, _Canvas.height);
+        };
+
+        Shell.prototype.shellLoad = function () {
+            var input = "";
+            var isHex = 0;
+            var hexCharacters = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f", " "];
+            input = document.getElementById("taProgramInput").value.trim().toLowerCase();
+
+            if (input === "") {
+                _StdOut.putText("Have you tried actually typing something?");
+            } else {
+                for (var i = 0; i < input.length; i++) {
+                    if (hexCharacters.indexOf(input.charAt(i)) === -1 && i === input.length - 1) {
+                        _StdOut.putText("This isn't hex.  Are you even trying?");
+                    } else {
+                        if (i === input.length - 1) {
+                            _StdOut.putText("This is hex.  Fanfuckintastic.");
+                        }
+                    }
+                }
+            }
         };
 
         Shell.prototype.shellTrace = function (args) {
