@@ -9,6 +9,7 @@
      Note: This is not the Shell.  The Shell is the "command line interface" (CLI) or interpreter for this console.
      ------------ */
 
+
 module TSOS 
 {
 
@@ -19,9 +20,9 @@ module TSOS
                     public currentFontSize = _DefaultFontSize,
                     public currentXPosition = 0,
                     public currentYPosition = _DefaultFontSize,
-                    public buffer = "") 
-                    public history = [];
-                    public historyIndex = history.length {
+                    public buffer = "", 
+                    public history = [],
+                    public historyIndex = history.length) {
 
         }
 
@@ -78,9 +79,9 @@ module TSOS
                             // dont forget to update this list later (if ever changing commands)
                             var ourCommands = ["ver", "help", "shutdown", "cls", "man", "trace", "rot13", "prompt", "status", "date", "whereami", "portal"];
                             // 
-                            for(var k=0; k < currentCommands.length; k++)
+                            for(var k=0; k < ourCommands.length; k++)
                             {
-                                if ((this.inOrderContains(ourBuffer, ourCommands[k])) && matchFound == false)
+                                if ((this.conatainCheck(ourBuffer, ourCommands[k])) && matchFound == false)
                                 {
                                     ourBuffer = ourCommands[k];
                                     matchFound = true;
@@ -98,8 +99,8 @@ module TSOS
                                 if(this.historyIndex > 0)
                                 {
                                     var pastCommands = this.history[this.historyIndex - 1];
-                                    this.replaceBuffer(PastCommands);
-                                    this.historyIndex = this.historyIndex -1;
+                                    this.replaceBuffer(pastCommands);
+                                    this.historyIndex = this.historyIndex - 1;
                                 }
                             }
                             else
@@ -138,6 +139,29 @@ module TSOS
             // do the same thing, thereby encouraging confusion and decreasing readability, I
             // decided to write one function and use the term "text" to connote string or char.
             // UPDATE: Even though we are now working in TypeScript, char and string remain undistinguished.
+            if(text.length > 1)
+            {
+                for(var i = 0; i < text.length; i++)
+                {
+                    this.putText(text.charAt(i));
+                }
+            }
+            else
+            {
+                if (text !== "")
+                {
+                    var diff = _DrawingContext.measureText(this.currentFontSize, text);
+                    if((this.currentXPosition + diff) > 500)
+                    {
+                        //advanceLine();
+                        this.advanceLine();
+                    }
+                    _DrawingContext.drawText(this.currentFont, this.currentFontSize, this.currentXPosition, this.currentYPosition, text);
+                    this.currentXPosition = this.currentXPosition + diff;
+                }
+            }
+
+            /*
             if (text !== "") 
             {
                 // Draw the text at the current X and Y coordinates.
@@ -145,13 +169,22 @@ module TSOS
                 // Move the current X position.
                 var offset = _DrawingContext.measureText(this.currentFont, this.currentFontSize, text);
                 this.currentXPosition = this.currentXPosition + offset;
-            }
+            }*/
          }
 
         public advanceLine(): void 
         {
             // TODO: Handle scrolling. (Project 1)
-            var yPos = _DefaultFontSize + _FontHeightMargin;
+            this.currentXPosition = 0;
+            if((this.currentYPosition + _DefaultFontSize + _FontHeightMargin) < _DrawingContext.canvas.height)
+            {
+                this.currentYPosition += _DefaultFontSize + _FontHeightMargin;
+            }
+            else
+            {
+                this.scrollTheScreen();
+            }
+            /*var yPos = _DefaultFontSize + _FontHeightMargin;
             if (this.currentYPosition >= _Canvas.height - yPos)
             {
                 var cHeight = _Canvas.height;
@@ -165,7 +198,38 @@ module TSOS
             {
                this.currentXPosition = 0;
                this.currentYPosition += _DefaultFontSize + _FontHeightMargin; 
+            }*/
+        }
+
+        public scrollTheScreen()
+        {
+            var canvasWidth, canvasHeight, image, yDiff;
+            canvasWidth = _DrawingContext.canvas.width;
+            canvasHeight = _DrawingContext.canvas.height;
+            yDiff = _DefaultFontSize + _FontHeightMargin;
+            image = _DrawingContext.getImageData(0, yDiff, canvasWidth, canvasHeight);
+            _DrawingContext.putImageData(image, 0, 0);
+            _DrawingContext.clearRect(0, canvasHeight - yDiff, canvasWidth, canvasHeight);
+        }
+
+        public conatainCheck(smallText, largeText): boolean
+        {
+            var matching = true;
+            if(smallText.length >= largeText.length)
+            {
+                return false;
             }
+            else
+            {
+                for(var i = 0; i < smallText.length; i++)
+                {
+                    if(smallText.charAt(i) != largeText.charAt(i))
+                    {
+                        matching = false;
+                    }
+                }
+            }
+            return matching;
         }
 
         public backspace(text): void
