@@ -102,13 +102,13 @@ module TSOS {
             // Based (blue) screen of death
             sc = new ShellCommand(this.shellfakeBased,
                                     "fakeBased",
-                                    "You sure you want to do that?.");
+                                    "- You sure you want to do that?.");
             this.commandList[this.commandList.length] = sc;
 
             // Load
             sc = new ShellCommand(this.shellLoad,
                                     "load",
-                                    "Lets user load code. (Hex plz) ");
+                                    "- Lets user load code. (Hex plz) ");
             this.commandList[this.commandList.length] = sc;
             
 
