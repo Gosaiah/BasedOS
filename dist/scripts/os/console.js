@@ -67,7 +67,7 @@ var TSOS;
                             matchFound = false;
 
                             // dont forget to update this list later! (if ever changing/adding commands)
-                            var ourCommands = ["ver", "help", "shutdown", "cls", "man", "trace", "rot13", "prompt", "status", "date", "whereami", "portal", "bsod", "load"];
+                            var ourCommands = ["ver", "help", "shutdown", "cls", "man", "trace", "rot13", "prompt", "status", "date", "whereami", "portal"];
                             for (var k = 0; k < ourCommands.length; k++) {
                                 if ((this.containsCheck(ourBuffer, ourCommands[k])) && matchFound == false) {
                                     ourBuffer = ourCommands[k];
@@ -115,9 +115,8 @@ var TSOS;
             // decided to w;rite one function and use the term "text" to connote string or char.
             // start line wrapping
             //
-            var textLength = text.length;
-            if (textLength > 1) {
-                for (var i = 0; i < textLength; i++) {
+            if (text.length > 1) {
+                for (var i = 0; i < text.length; i++) {
                     this.putText(text.charAt(i));
                 }
             } else {
@@ -126,12 +125,7 @@ var TSOS;
                     // Draw text at current X and Y coordinates.
                     var diff = _DrawingContext.measureText(this.currentFont, this.currentFontSize, text);
                     if ((this.currentXPosition + diff) > 500) {
-                        //this.putText("-");
-                        //goto Next line
                         this.advanceLine();
-
-                        // add spacing for visual
-                        this.putText("  ");
                     }
 
                     // redraw with new position
@@ -156,9 +150,8 @@ var TSOS;
             // TODO: Handle scrolling. (Project 1)
             this.currentXPosition = 0;
 
-            // while within original canvas height
+            // while within origianl canvas height
             if ((this.currentYPosition + _DefaultFontSize + _FontHeightMargin) < _DrawingContext.canvas.height) {
-                // yPos is standard -> fontSize and margin
                 this.currentYPosition += _DefaultFontSize + _FontHeightMargin;
             } else {
                 this.scrollTheScreen();
@@ -167,7 +160,7 @@ var TSOS;
 
         // Method - scrolling the screen
         Console.prototype.scrollTheScreen = function () {
-            // yDiff is just difference in y space with the chars included
+            // yDiff is just difference in y space with the chars
             var yDiff = _DefaultFontSize + _FontHeightMargin;
             var image = _DrawingContext.getImageData(0, yDiff, _DrawingContext.canvas.width, _DrawingContext.canvas.height);
 
@@ -175,24 +168,20 @@ var TSOS;
             _DrawingContext.clearRect(0, _DrawingContext.canvas.height - yDiff, _DrawingContext.canvas.width, _DrawingContext.canvas.height);
         };
 
-        // Gotta check if part of a string(partial) is contained in a larger string
-        Console.prototype.containsCheck = function (partialString, largerString) {
-            var matchingString, partialStringLength, largerStringLength;
-            matchingString = true;
-            partialStringLength = partialString.length;
-            largerStringLength = largerString.length;
-
-            //not contained if partial is as long or longer then larger
-            if (partialStringLength >= largerStringLength) {
+        //function to check if a smaller sting is contained within the larger string
+        //stating at char 0
+        Console.prototype.containsCheck = function (smallText, largeText) {
+            var isStillMatching = true;
+            if (smallText.length >= largeText.length) {
                 return false;
             } else {
-                for (var i = 0; i < partialStringLength; i++) {
-                    if (partialString.charAt(i) != largerString.charAt(i)) {
-                        matchingString = false;
+                for (var i = 0; i < smallText.length; i++) {
+                    if (smallText.charAt(i) != largeText.charAt(i)) {
+                        isStillMatching = false;
                     }
                 }
             }
-            return matchingString;
+            return isStillMatching;
         };
 
         Console.prototype.backSpace = function (text) {
@@ -200,12 +189,13 @@ var TSOS;
             var heightY = _DefaultFontSize + _FontHeightMargin;
             _DrawingContext.clearRect(this.currentXPosition - lenghtOfChar, ((this.currentYPosition - heightY) + 5), lenghtOfChar, heightY);
 
-            // if there was text, bring it back
+            // if theres text, bring it back
             if (this.currentXPosition > 0) {
                 this.currentXPosition = this.currentXPosition - lenghtOfChar;
             }
         };
 
+        //function to replace the buffer on the screen and behind the scenes
         Console.prototype.replaceBuffer = function (text) {
             for (var i = this.buffer.length; i > 0; i--) {
                 var charRemove = this.buffer.charAt(this.buffer.length - 1);

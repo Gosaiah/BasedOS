@@ -78,7 +78,7 @@ module TSOS
                             ourBuffer = this.buffer.toString();
                             matchFound = false;
                             // dont forget to update this list later! (if ever changing/adding commands)
-                            var ourCommands = ["ver", "help", "shutdown", "cls", "man", "trace", "rot13", "prompt", "status", "date", "whereami", "portal", "bsod", "load"];
+                            var ourCommands = ["ver", "help", "shutdown", "cls", "man", "trace", "rot13", "prompt", "status", "date", "whereami", "portal"];
                             for(var k = 0; k < ourCommands.length; k++) 
                             {
                                 if ((this.containsCheck(ourBuffer, ourCommands[k])) && matchFound == false) 
@@ -114,14 +114,13 @@ module TSOS
                                             this.historyIndex = this.historyIndex + 1;
                                         }
                                     }
-                                else 
-                                {
-                                    // This is a "normal" character, so ...
-                                    // ... draw it on the screen...
-                                    this.putText(chr);
-                                    // ... and add it to our buffer.
-                                    this.buffer += chr;
-                                }
+                                else {
+                                        // This is a "normal" character, so ...
+                                        // ... draw it on the screen...
+                                        this.putText(chr);
+                                        // ... and add it to our buffer.
+                                        this.buffer += chr;
+                                    }
                             }
                         }
                     }
@@ -139,11 +138,10 @@ module TSOS
             // decided to w;rite one function and use the term "text" to connote string or char.
 
             // start line wrapping
-            //
-            var textLength = text.length; //this seams pointless/extra step
-            if(textLength > 1)
+            // 
+            if(text.length > 1)
             {
-                for(var i = 0; i < textLength; i++)
+                for(var i = 0; i < text.length; i++)
                 {
                     this.putText(text.charAt(i));
                 }
@@ -157,11 +155,7 @@ module TSOS
                     var diff = _DrawingContext.measureText(this.currentFont, this.currentFontSize, text);
                     if((this.currentXPosition + diff) > 500)
                     {
-                        //this.putText("-");
-                        //goto Next line
                         this.advanceLine();
-                        // add spacing for visual
-                        this.putText("  ");
                     }
                     // redraw with new position
                     _DrawingContext.drawText(this.currentFont, this.currentFontSize, this.currentXPosition, this.currentYPosition, text);
@@ -184,10 +178,9 @@ module TSOS
         {
             // TODO: Handle scrolling. (Project 1)
             this.currentXPosition = 0;
-            // while within original canvas height
+            // while within origianl canvas height
             if((this.currentYPosition + _DefaultFontSize + _FontHeightMargin) < _DrawingContext.canvas.height) 
             {
-                // yPos is standard -> fontSize and margin
                 this.currentYPosition += _DefaultFontSize + _FontHeightMargin;
             }
             else
@@ -199,7 +192,7 @@ module TSOS
         // Method - scrolling the screen
         public scrollTheScreen()
         {
-            // yDiff is just difference in y space with the chars included
+            // yDiff is just difference in y space with the chars
             var yDiff = _DefaultFontSize + _FontHeightMargin;
             var image = _DrawingContext.getImageData(0, yDiff, _DrawingContext.canvas.width, _DrawingContext.canvas.height);
 
@@ -207,29 +200,26 @@ module TSOS
             _DrawingContext.clearRect(0, _DrawingContext.canvas.height - yDiff,_DrawingContext.canvas.width, _DrawingContext.canvas.height);
         }
 
-        // Gotta check if part of a string(partial) is contained in a larger string
-        public containsCheck(partialString, largerString): boolean
+        //function to check if a smaller sting is contained within the larger string
+        //stating at char 0
+        public containsCheck(smallText, largeText): boolean
         {
-            var matchingString, partialStringLength, largerStringLength;
-            matchingString = true;
-            partialStringLength = partialString.length;
-            largerStringLength = largerString.length;
-            //not contained if partial is as long or longer then larger
-            if(partialStringLength >= largerStringLength)
+            var isStillMatching = true;
+            if(smallText.length >= largeText.length)
             {
                 return false;
             }
             else 
             {
-                for (var i = 0; i < partialStringLength; i++) 
+                for (var i = 0; i < smallText.length; i++) 
                 {
-                    if (partialString.charAt(i) != largerString.charAt(i)) 
+                    if (smallText.charAt(i) != largeText.charAt(i)) 
                     {
-                        matchingString = false;
+                        isStillMatching = false;
                     }
                 }
             }
-            return matchingString;
+            return isStillMatching;
         }
 
         public backSpace(text): void
@@ -237,7 +227,7 @@ module TSOS
             var lenghtOfChar = _DrawingContext.measureText(this.currentFont, this.currentFontSize, text);
             var heightY = _DefaultFontSize + _FontHeightMargin;
             _DrawingContext.clearRect(this.currentXPosition - lenghtOfChar, ((this.currentYPosition - heightY) + 5), lenghtOfChar, heightY);
-            // if there was text, bring it back
+            // if theres text, bring it back
             if(this.currentXPosition > 0)
             {
                 this.currentXPosition = this.currentXPosition - lenghtOfChar;
@@ -245,10 +235,12 @@ module TSOS
 
         }
         
+       //function to replace the buffer on the screen and behind the scenes
         public replaceBuffer(text)
         {
             // clear characters then add the new ones
             //clear
+            //first clear all characters
             for(var i = this.buffer.length; i >0; i--)
             {
                 var charRemove = this.buffer.charAt(this.buffer.length - 1);
