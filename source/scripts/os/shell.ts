@@ -202,10 +202,10 @@ module TSOS
             }
             // ... and finally write the prompt again...almost..
             // as long as the canvas isnt filled with black, write the prompt again
-            if(_DrawingContext.fillStyle != "#000000")
+            /*if(_DrawingContext.fillStyle != "#000000")
             {    
                 this.putPrompt();
-            }
+            }*/
             this.putPrompt();
         }
 
@@ -412,8 +412,12 @@ module TSOS
             // Call Kernel trap
             _Kernel.krnTrapError("FakeBased. BasedWorld does not approve -_-");
             //fill canvas with black
-            _DrawingContext.fillStyle = "black";
-            _DrawingContext.fillRect(0, 0, _Canvas.width, _Canvas.height);
+            //_DrawingContext.fillStyle = "black";
+            //_DrawingContext.fillRect(0, 0, _Canvas.width, _Canvas.height);
+            var element:HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("display");
+            element.style.display = "none";
+            var element2:HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("divConsole");
+            element2.style.backgroundImage = "url('dist/images/basedgod.gif')";
             _Kernel.krnShutdown();
         }
 

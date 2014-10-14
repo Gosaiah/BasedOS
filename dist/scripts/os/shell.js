@@ -74,7 +74,15 @@ var TSOS;
             this.commandList[this.commandList.length] = sc;
 
             // Load
-            sc = new TSOS.ShellCommand(this.shellLoad, "load", "- Allows for #Based Hex code");
+            sc = new TSOS.ShellCommand(this.shellLoad, "load", "<string> - Allows for #Based Hex code");
+            this.commandList[this.commandList.length] = sc;
+
+            // Run
+            sc = new TSOS.ShellCommand(this.shellRun, "run", "<processId> - Executes a program in memory");
+            this.commandList[this.commandList.length] = sc;
+
+            // Single Step
+            sc = new TSOS.ShellCommand(this.shellStep, "step", "<int> - Runs single step mode via the process given (pId)");
             this.commandList[this.commandList.length] = sc;
 
             // processes - list the running processes and their IDs
@@ -146,9 +154,10 @@ var TSOS;
 
             // ... and finally write the prompt again...almost..
             // as long as the canvas isnt filled with black, write the prompt again
-            if (_DrawingContext.fillStyle != "#000000") {
-                this.putPrompt();
-            }
+            /*if(_DrawingContext.fillStyle != "#000000")
+            {
+            this.putPrompt();
+            }*/
             this.putPrompt();
         };
 
@@ -314,17 +323,21 @@ var TSOS;
             }
         };
 
-        Shell.prototype.shellBsod = function (args) {
+        Shell.prototype.shellBsod = function () {
             // Call Kernel trap
             _Kernel.krnTrapError("FakeBased. BasedWorld does not approve -_-");
 
             //fill canvas with black
-            _DrawingContext.fillStyle = "black";
-            _DrawingContext.fillRect(0, 0, _Canvas.width, _Canvas.height);
+            //_DrawingContext.fillStyle = "black";
+            //_DrawingContext.fillRect(0, 0, _Canvas.width, _Canvas.height);
+            var element = document.getElementById("display");
+            element.style.display = "none";
+            var element2 = document.getElementById("divConsole");
+            element2.style.backgroundImage = "url('dist/images/basedgod.gif')";
             _Kernel.krnShutdown();
         };
 
-        Shell.prototype.shellLoad = function () {
+        Shell.prototype.shellLoad = function (args) {
             var input = "";
             var hexCharacters = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f", " "];
 
@@ -342,11 +355,18 @@ var TSOS;
                         // if all chars are hex we are good
                         var tempLength = input.length - 1;
                         if (i === tempLength) {
+                            _MemoryManager.loadMemory(memoryString);
                             _StdOut.putText("Lil B loves you.... and your hex #taskForce");
                         }
                     }
                 }
             }
+        };
+
+        Shell.prototype.shellRun = function (pId) {
+        };
+
+        Shell.prototype.shellStep = function (pId) {
         };
         return Shell;
     })();
