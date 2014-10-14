@@ -112,7 +112,7 @@ module TSOS
             // Load
             sc = new ShellCommand(this.shellLoad,
                                   "load",
-                                  "- Allows for #Based Hex code");
+                                  "<string> - Allows for #Based Hex code");
             this.commandList[this.commandList.length] = sc;
 
             // processes - list the running processes and their IDs
@@ -395,7 +395,7 @@ module TSOS
             }
         }
 
-        public shellBsod(args) 
+        public shellBsod() 
         {
             // Call Kernel trap
             _Kernel.krnTrapError("FakeBased. BasedWorld does not approve -_-");
