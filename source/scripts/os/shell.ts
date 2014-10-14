@@ -103,8 +103,17 @@ module TSOS
                                     "- Displays if the cake is in fact a lie..");
             this.commandList[this.commandList.length] = sc;
 
+            // Cause Based blue screen of death
+            sc = new ShellCommand(this.shellBsod, 
+                                    "bsod",
+                                    "- You sure you want to do that? #taskForce will find you!");
+            this.commandList[this.commandList.length] = sc;
 
-            
+            // Load
+            sc = new ShellCommand(this.shellLoad,
+                                  "load",
+                                  "- Allows for #Based Hex code");
+            this.commandList[this.commandList.length] = sc;
 
             // processes - list the running processes and their IDs
             // kill <id> - kills the specified process id.
@@ -179,7 +188,12 @@ module TSOS
             {
                 _StdOut.advanceLine();
             }
-            // ... and finally write the prompt again.
+            // ... and finally write the prompt again...almost..
+            // as long as the canvas isnt filled with black, write the prompt again
+            if(_DrawingContext.fillStyle != "#000000")
+            {    
+                this.putPrompt();
+            }
             this.putPrompt();
         }
 
@@ -311,12 +325,12 @@ module TSOS
             }
         }
 
-        /*public shellDate(args)
+        public shellDate(args)
         {
-            var now = new Date();
-            _StdOut.putText(now.getMonth
-                
-        }*/
+            // var now = new Date();
+            //_StdOut.putText(now.getMonth
+            _StdOut.putText("TEMP DATE STRING");       
+        }
 
         public shellWhereAmI(args) 
         {
@@ -378,6 +392,51 @@ module TSOS
                 _OsShell.promptStr = args[0];
             } else {
                 _StdOut.putText("Usage: prompt <string>  Please supply a string.");
+            }
+        }
+
+        public shellBsod(args) 
+        {
+            // Call Kernel trap
+            _Kernel.krnTrapError("FakeBased. BasedWorld does not approve -_-");
+            //fill canvas with black
+            _DrawingContext.fillStyle = "black";
+            _DrawingContext.fillRect(0, 0, _Canvas.width, _Canvas.height);
+            _Kernel.krnShutdown();
+        }
+
+        public shellLoad() 
+        {
+            var input = "";
+            var hexCharacters = ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"," "];
+            // make all text lower case from the User Program Input
+            input = (<HTMLInputElement>document.getElementById("taProgramInput")).value.trim().toLowerCase();
+
+            //if blank ...not good
+            if(input === "")
+            {
+                _StdOut.putText("Awaiting orders #taskForce");
+            }
+            else 
+            {
+                // if not all numbers are hex...not good enough
+                for (var i = 0; i < input.length; i++)
+                {
+                    if (hexCharacters.indexOf(input.charAt(i)) === -1 && i === input.length - 1){
+                        _StdOut.putText("orders received. wait wat? #taskForce");
+                    }
+                
+                    else 
+                    {
+                        // if all chars are hex we are good
+                        var tempLength = input.length-1;
+                        if(i === tempLength)
+                        {               
+                            _StdOut.putText("Lil B loves you.... and your hex #taskForce");
+                        }
+                    }
+                }
+
             }
         }
 
