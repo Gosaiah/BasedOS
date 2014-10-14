@@ -115,6 +115,18 @@ module TSOS
                                   "<string> - Allows for #Based Hex code");
             this.commandList[this.commandList.length] = sc;
 
+            // Run
+            sc = new ShellCommand(this.shellRun,
+                                    "run",
+                                    "<processId> - Executes a program in memory");
+            this.commandList[this.commandList.length] = sc;
+
+            // Single Step
+            sc = new ShellCommand(this.shellStep, 
+                                    "step",
+                                    "<int> - Runs single step mode via the process given (pId)");
+            this.commandList[this.commandList.length] = sc;
+
             // processes - list the running processes and their IDs
             // kill <id> - kills the specified process id.
 
@@ -190,10 +202,10 @@ module TSOS
             }
             // ... and finally write the prompt again...almost..
             // as long as the canvas isnt filled with black, write the prompt again
-            if(_DrawingContext.fillStyle != "#000000")
+            /*if(_DrawingContext.fillStyle != "#000000")
             {    
                 this.putPrompt();
-            }
+            }*/
             this.putPrompt();
         }
 
@@ -400,12 +412,16 @@ module TSOS
             // Call Kernel trap
             _Kernel.krnTrapError("FakeBased. BasedWorld does not approve -_-");
             //fill canvas with black
-            _DrawingContext.fillStyle = "black";
-            _DrawingContext.fillRect(0, 0, _Canvas.width, _Canvas.height);
+            //_DrawingContext.fillStyle = "black";
+            //_DrawingContext.fillRect(0, 0, _Canvas.width, _Canvas.height);
+            var element:HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("display");
+            element.style.display = "none";
+            var element2:HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("divConsole");
+            element2.style.backgroundImage = "url('dist/images/basedgod.gif')";
             _Kernel.krnShutdown();
         }
 
-        public shellLoad() 
+        public shellLoad(args) 
         {
             var input = "";
             var hexCharacters = ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"," "];
@@ -431,13 +447,24 @@ module TSOS
                         // if all chars are hex we are good
                         var tempLength = input.length-1;
                         if(i === tempLength)
-                        {               
+                        {    
+                            _MemoryManager.loadMemory(memoryString);           
                             _StdOut.putText("Lil B loves you.... and your hex #taskForce");
                         }
                     }
                 }
 
             }
+        }
+
+        public shellRun(pId)
+        {
+
+        }
+
+        public shellStep(pId)
+        {
+
         }
 
     }

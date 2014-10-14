@@ -13,7 +13,7 @@
 // TODO: Make a global object and use that instead of the "_" naming convention in the global namespace.
 //
 var APP_NAME: string    = "BasedOS";   // 'cause Bob and I were at a loss for a better name.
-var APP_VERSION: string = "10.13";   // Good way to keep track of dates
+var APP_VERSION: string = "10.13.3";   // Good way to keep track of dates
 var STATUS: string = "Type command: <status> to make a status";
 var statusCanvas = null;
 var myStatus = null;
@@ -28,6 +28,8 @@ var KEYBOARD_IRQ: number = 1;
 //
 // Global Variables
 //
+//var _PArray = new Array<TSOS.PCB>(); // the Processes
+
 var _CPU: TSOS.Cpu;  // Utilize TypeScript's type annotation system to ensure that _CPU is an instance of the Cpu class.
 
 var _OSclock: number = 0;  // Page 23.
@@ -48,6 +50,9 @@ var _Kernel: TSOS.Kernel;
 var _KernelInterruptQueue = null;
 var _KernelBuffers: any[] = null;
 var _KernelInputQueue = null;
+
+var _Memory: TSOS.Memory;
+var _MemoryManager: TSOS.MemoryManager;
 
 // Standard input and output
 var _StdIn  = null;
