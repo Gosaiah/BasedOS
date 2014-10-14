@@ -51,8 +51,6 @@ var _KernelInterruptQueue = null;
 var _KernelBuffers: any[] = null;
 var _KernelInputQueue = null;
 
-
-// Memory + Manager
 var _Memory: TSOS.Memory;
 var _MemoryManager: TSOS.MemoryManager;
 
