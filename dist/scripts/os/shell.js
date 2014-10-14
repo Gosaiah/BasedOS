@@ -78,12 +78,12 @@ var TSOS;
             sc = new TSOS.ShellCommand(this.shellPortal, "portal", "- Displays if the cake is in fact a lie..");
             this.commandList[this.commandList.length] = sc;
 
-            // Based (blue) screen of death
-            sc = new TSOS.ShellCommand(this.shellfakeBased, "fakeBased", "You sure you want to do that?.");
+            // Cause Based blue screen of death
+            sc = new TSOS.ShellCommand(this.shellBsod, "bsod", "- You sure you want to do that? #taskForce will find you!");
             this.commandList[this.commandList.length] = sc;
 
             // Load
-            sc = new TSOS.ShellCommand(this.shellLoad, "load", "Lets user load code. (Hex plz) ");
+            sc = new TSOS.ShellCommand(this.shellLoad, "load", "- Allows for #Based Hex code");
             this.commandList[this.commandList.length] = sc;
 
             // processes - list the running processes and their IDs
@@ -153,7 +153,11 @@ var TSOS;
                 _StdOut.advanceLine();
             }
 
-            // ... and finally write the prompt again.
+            // ... and finally write the prompt again...almost..
+            // as long as the canvas isnt filled with black, write the prompt again
+            if (_DrawingContext.fillStyle != "#000000") {
+                this.putPrompt();
+            }
             this.putPrompt();
         };
 
@@ -264,10 +268,9 @@ var TSOS;
         };
 
         Shell.prototype.shellDate = function (args) {
-            var now = new Date();
-
+            // var now = new Date();
             //_StdOut.putText(now.getMonth
-            _StdOut.putText("Date Test");
+            _StdOut.putText("TEMP DATE STRING");
         };
 
         Shell.prototype.shellWhereAmI = function (args) {
@@ -276,37 +279,6 @@ var TSOS;
 
         Shell.prototype.shellPortal = function (args) {
             _StdOut.putText("Actually, the Cake is in fact very real and not a lie at all. Man, i'm hungry >_>");
-        };
-
-        Shell.prototype.shellfakeBased = function () {
-            _Kernel.krnTrapError("BSOD TEST");
-            _DrawingContext.fillStyle = "black";
-            _DrawingContext.fillRect(0, 0, _Canvas.width, _Canvas.height);
-        };
-
-        Shell.prototype.shellLoad = function () {
-            var input, hexCheck, hexChars;
-            input = "";
-            hexCheck = 0;
-            hexChars = [
-                "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
-                "a", "b", "c", "d", "e", "f", " "];
-            input = document.getElementById("display").value.trim().toLowerCase();
-
-            //check the input - null, non hex, hex
-            if (input === "") {
-                _StdOut.putText("Nothing here");
-            } else {
-                for (var i = 0; i < input.length; i++) {
-                    if (hexChars.indexOf(input.charAt(i)) == -1 && i === input.length - 1) {
-                        _StdOut.putText("Not Hex");
-                    } else {
-                        if (i === input.length - 1) {
-                            _StdOut.putText("Cool");
-                        }
-                    }
-                }
-            }
         };
 
         Shell.prototype.shellTrace = function (args) {
@@ -350,6 +322,7 @@ var TSOS;
                 _StdOut.putText("Usage: prompt <string>  Please supply a string.");
             }
         };
+<<<<<<< HEAD
         
         Shell.prototype.shellDate = function (args) 
         {
@@ -366,6 +339,43 @@ var TSOS;
         	_StdOut.putText("Gracias Dios Basado");   
         };
          
+=======
+
+        Shell.prototype.shellBsod = function (args) {
+            // Call Kernel trap
+            _Kernel.krnTrapError("FakeBased. BasedWorld does not approve -_-");
+
+            //fill canvas with black
+            _DrawingContext.fillStyle = "black";
+            _DrawingContext.fillRect(0, 0, _Canvas.width, _Canvas.height);
+            _Kernel.krnShutdown();
+        };
+
+        Shell.prototype.shellLoad = function () {
+            var input = "";
+            var hexCharacters = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f", " "];
+
+            // make all text lower case from the User Program Input
+            input = document.getElementById("taProgramInput").value.trim().toLowerCase();
+
+            //if blank ...not good
+            if (input === "") {
+                _StdOut.putText("Awaiting orders #taskForce");
+            } else {
+                for (var i = 0; i < input.length; i++) {
+                    if (hexCharacters.indexOf(input.charAt(i)) === -1 && i === input.length - 1) {
+                        _StdOut.putText("orders received. wait wat? #taskForce");
+                    } else {
+                        // if all chars are hex we are good
+                        var tempLength = input.length - 1;
+                        if (i === tempLength) {
+                            _StdOut.putText("Lil B loves you.... and your hex #taskForce");
+                        }
+                    }
+                }
+            }
+        };
+>>>>>>> Test
         return Shell;
     })();
     TSOS.Shell = Shell;

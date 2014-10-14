@@ -9,6 +9,7 @@
      Note: This is not the Shell.  The Shell is the "command line interface" (CLI) or interpreter for this console.
      ------------ */
 
+
 module TSOS 
 {
 
@@ -19,9 +20,9 @@ module TSOS
                     public currentFontSize = _DefaultFontSize,
                     public currentXPosition = 0,
                     public currentYPosition = _DefaultFontSize,
-                    public buffer = "") 
-                    public history = [];
-                    public historyIndex = history.length {
+                    public buffer = "",
+                    public history = [],
+                    public historyIndex = history.length) {
 
         }
 
@@ -49,8 +50,8 @@ module TSOS
                 // Get the next character from the kernel input queue.
                 var chr = _KernelInputQueue.dequeue();
                 // Check to see if it's "special" (enter or ctrl-c) or "normal" (anything else that the keyboard device driver gave us).
-                if (chr === String.fromCharCode(13)) //     Enter key
-                { 
+                if (chr === String.fromCharCode(13)) 
+                { //     Enter key
                     // The enter key marks the end of a console command, so ...
                     // ... tell the shell ...
                     this.history[this.history.length] = this.buffer;
@@ -58,16 +59,17 @@ module TSOS
                     _OsShell.handleInput(this.buffer);
                     // ... and reset our buffer.
                     this.buffer = "";
-                } else 
+                } 
+                else 
                 {
-                    if(chr === String.fromCharCode(8))
-                    {
+                    if (chr === String.fromCharCode(8)) 
+                    { 
                         //backspace
-                        var charRemove = this.buffer.charAt(this.buffer.length - 1);
+                        var charRemove = this.buffer.charAt(this.buffer.length - 1)
                         this.buffer = this.buffer.substring(0, this.buffer.length - 1);
-                        this.backspace(charRemove);
+                        this.backSpace(charRemove);
                     }
-                    else
+                    else 
                     {
                         // autocomplete with tab button
                         if(chr == String.fromCharCode(9))
@@ -75,12 +77,11 @@ module TSOS
                             var ourBuffer,matchFound;
                             ourBuffer = this.buffer.toString();
                             matchFound = false;
-                            // dont forget to update this list later (if ever changing commands)
-                            var ourCommands = ["ver", "help", "shutdown", "cls", "man", "trace", "rot13", "prompt", "status", "date", "whereami", "portal"];
-                            // 
-                            for(var k=0; k < currentCommands.length; k++)
+                            // dont forget to update this list later! (if ever changing/adding commands)
+                            var ourCommands = ["ver", "help", "shutdown", "cls", "man", "trace", "rot13", "prompt", "status", "date", "whereami", "portal", "bsod", "load"];
+                            for(var k = 0; k < ourCommands.length; k++) 
                             {
-                                if ((this.inOrderContains(ourBuffer, ourCommands[k])) && matchFound == false)
+                                if ((this.containsCheck(ourBuffer, ourCommands[k])) && matchFound == false) 
                                 {
                                     ourBuffer = ourCommands[k];
                                     matchFound = true;
@@ -91,32 +92,29 @@ module TSOS
                                 this.replaceBuffer(ourBuffer);
                             }
                         }
-                        else
+                        else 
                         {
                             if(chr == "upArrow")
                             {
-
-                                if(this.historyIndex > 0)
+                                if(this.historyIndex >  0)
                                 {
-                                    var tempHistLen= this.history.length - 1;
-                                    var pastCommands = this.history[tempHistLen];
-                                    this.replaceBuffer(PastCommands);
-                                    this.historyIndex = this.historyIndex -1;
+                                    var pastCommands = this.history[this.historyIndex - 1]
+                                    this.replaceBuffer(pastCommands);
+                                    this.historyIndex = this.historyIndex - 1;
                                 }
                             }
-                            else
+                            else 
                             {
-                                if(chr == "downArrow")
-                                {
-                                    var tempHistLen= this.history.length - 1;
-                                    if(this.historyIndex < tempHistLen)
+                                    if(chr == "downArrow")
                                     {
-                                        var pastCommands = this.history[this.historyIndex + 1];
-                                        this.replaceBuffer(pastCommands);
-                                        this.historyIndex = this.historyIndex + 1;
+                                        if(this.historyIndex < this.history.length - 1)
+                                        {
+                                            var pastCommands = this.history[this.historyIndex + 1]
+                                            this.replaceBuffer(pastCommands);
+                                            this.historyIndex = this.historyIndex + 1;
+                                        }
                                     }
-                                }
-                                else
+                                else 
                                 {
                                     // This is a "normal" character, so ...
                                     // ... draw it on the screen...
@@ -138,8 +136,40 @@ module TSOS
             // Then I remembered that JavaScript is (sadly) untyped and it won't differentiate
             // between the two.  So rather than be like PHP and write two (or more) functions that
             // do the same thing, thereby encouraging confusion and decreasing readability, I
-            // decided to write one function and use the term "text" to connote string or char.
-            // UPDATE: Even though we are now working in TypeScript, char and string remain undistinguished.
+            // decided to w;rite one function and use the term "text" to connote string or char.
+
+            // start line wrapping
+            //
+            var textLength = text.length; //this seams pointless/extra step
+            if(textLength > 1)
+            {
+                for(var i = 0; i < textLength; i++)
+                {
+                    this.putText(text.charAt(i));
+                }
+            }
+            else 
+            {
+                // Works as long as we have a string or char - > not blank
+                if (text !== "") 
+                {
+                    // Draw text at current X and Y coordinates.
+                    var diff = _DrawingContext.measureText(this.currentFont, this.currentFontSize, text);
+                    if((this.currentXPosition + diff) > 500)
+                    {
+                        //this.putText("-");
+                        //goto Next line
+                        this.advanceLine();
+                        // add spacing for visual
+                        this.putText("  ");
+                    }
+                    // redraw with new position
+                    _DrawingContext.drawText(this.currentFont, this.currentFontSize, this.currentXPosition, this.currentYPosition, text);
+                    // update x position 
+                   this.currentXPosition = this.currentXPosition + diff;
+                }
+            }
+            /*
             if (text !== "") 
             {
                 // Draw the text at the current X and Y coordinates.
@@ -147,7 +177,7 @@ module TSOS
                 // Move the current X position.
                 var offset = _DrawingContext.measureText(this.currentFont, this.currentFontSize, text);
                 this.currentXPosition = this.currentXPosition + offset;
-            }
+            }*/
          }
 
 <<<<<<< HEAD
@@ -167,47 +197,77 @@ module TSOS
         {
 >>>>>>> Test
             // TODO: Handle scrolling. (Project 1)
-            
-            var yPos = _DefaultFontSize + _FontHeightMargin;
-            if (this.currentYPosition >= _Canvas.height - yPos)
+            this.currentXPosition = 0;
+            // while within original canvas height
+            if((this.currentYPosition + _DefaultFontSize + _FontHeightMargin) < _DrawingContext.canvas.height) 
             {
-                var cHeight = _Canvas.height;
-                var cWidth = _Canvas.width;
-                var pixels = _DrawingContext.getImageData(0, _DefaultFontSize + _FontHeightMargin, cWidth, cHeight);
-                this.clearScreen;
-                _DrawingContext.putImageData(pixels,0,0);
-                this.currentXPosition = 0;
+                // yPos is standard -> fontSize and margin
+                this.currentYPosition += _DefaultFontSize + _FontHeightMargin;
             }
             else
             {
-               this.currentXPosition = 0;
-               this.currentYPosition += _DefaultFontSize + _FontHeightMargin; 
+                this.scrollTheScreen();
             }
-            
         }
 
-        public backspace(text): void
+        // Method - scrolling the screen
+        public scrollTheScreen()
         {
-            //get the height/width of the character being removed -> redraw the content without that character
+            // yDiff is just difference in y space with the chars included
+            var yDiff = _DefaultFontSize + _FontHeightMargin;
+            var image = _DrawingContext.getImageData(0, yDiff, _DrawingContext.canvas.width, _DrawingContext.canvas.height);
+
+            _DrawingContext.putImageData(image,0, 0);
+            _DrawingContext.clearRect(0, _DrawingContext.canvas.height - yDiff,_DrawingContext.canvas.width, _DrawingContext.canvas.height);
+        }
+
+        // Gotta check if part of a string(partial) is contained in a larger string
+        public containsCheck(partialString, largerString): boolean
+        {
+            var matchingString, partialStringLength, largerStringLength;
+            matchingString = true;
+            partialStringLength = partialString.length;
+            largerStringLength = largerString.length;
+            //not contained if partial is as long or longer then larger
+            if(partialStringLength >= largerStringLength)
+            {
+                return false;
+            }
+            else 
+            {
+                for (var i = 0; i < partialStringLength; i++) 
+                {
+                    if (partialString.charAt(i) != largerString.charAt(i)) 
+                    {
+                        matchingString = false;
+                    }
+                }
+            }
+            return matchingString;
+        }
+
+        public backSpace(text): void
+        {
             var lenghtOfChar = _DrawingContext.measureText(this.currentFont, this.currentFontSize, text);
             var heightY = _DefaultFontSize + _FontHeightMargin;
             _DrawingContext.clearRect(this.currentXPosition - lenghtOfChar, ((this.currentYPosition - heightY) + 5), lenghtOfChar, heightY);
-            // if theres text, bring it back and update our x position
+            // if there was text, bring it back
             if(this.currentXPosition > 0)
             {
                 this.currentXPosition = this.currentXPosition - lenghtOfChar;
             }
-        }
 
+        }
+        
         public replaceBuffer(text)
         {
             // clear characters then add the new ones
             //clear
-            for(var i = this.buffer.length; i > 0; i--)
+            for(var i = this.buffer.length; i >0; i--)
             {
                 var charRemove = this.buffer.charAt(this.buffer.length - 1);
                 this.buffer = this.buffer.substring(0, this.buffer.length - 1);
-                this.backspace(charRemove);
+                this.backSpace(charRemove);
             }
             //add
             this.buffer = text;
@@ -216,7 +276,6 @@ module TSOS
                 this.putText(this.buffer.charAt(k));
             }
         }
-
         
     }
  }
