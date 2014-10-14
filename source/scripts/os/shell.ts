@@ -423,6 +423,8 @@ module TSOS
             var hexCharacters = ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"," "];
             // make all text lower case from the User Program Input
             input = (<HTMLInputElement>document.getElementById("taProgramInput")).value.trim().toLowerCase();
+            //input = (<HTMLInputElement>document.getElementById("taProgramInput")).value.trim().toLowerCase();
+            var programString = input;
 
             //if blank ...not good
             if(input === "")
