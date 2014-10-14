@@ -23,11 +23,14 @@
 //
 // Control Services
 //
-module TSOS {
+module TSOS 
+{
 
-    export class Control {
+    export class Control 
+    {
 
-        public static hostInit(): void {
+        public static hostInit(): void 
+        {
             // Get a global reference to the canvas.  TODO: Move this stuff into a Display Device Driver, maybe?
             _Canvas = <HTMLCanvasElement>document.getElementById('display');
 
@@ -55,13 +58,15 @@ module TSOS {
             (<HTMLInputElement> document.getElementById("btnStartOS")).focus();
 
             // Check for our testing and enrichment core.
-            if (typeof Glados === "function") {
+            if (typeof Glados === "function") 
+            {
                 _GLaDOS = new Glados();
                 _GLaDOS.init();
             }
         }
 
-        public static hostLog(msg: string, source: string = "?"): void {
+        public static hostLog(msg: string, source: string = "?"): void 
+        {
             // Note the OS CLOCK.
             var clock: number = _OSclock;
 
@@ -81,7 +86,8 @@ module TSOS {
         //
         // Host Events
         //
-        public static hostBtnStartOS_click(btn): void {
+        public static hostBtnStartOS_click(btn): void 
+        {
             // Disable the (passed-in) start button...
             btn.disabled = true;
 
@@ -103,7 +109,8 @@ module TSOS {
             _Kernel.krnBootstrap();
         }
 
-        public static hostBtnHaltOS_click(btn): void {
+        public static hostBtnHaltOS_click(btn): void 
+        {
             Control.hostLog("Emergency halt", "host");
             Control.hostLog("Attempting Kernel shutdown.", "host");
             // Call the OS shutdown routine.
@@ -113,7 +120,8 @@ module TSOS {
             // TODO: Is there anything else we need to do here?
         }
 
-        public static hostBtnReset_click(btn): void {
+        public static hostBtnReset_click(btn): void 
+        {
             // The easiest and most thorough way to do this is to reload (not refresh) the document.
             location.reload(true);
             // That boolean parameter is the 'forceget' flag. When it is true it causes the page to always
