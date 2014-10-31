@@ -10,11 +10,11 @@ Operating System Concepts 8th edition by Silberschatz, Galvin, and Gagne.  ISBN 
 // TODO: Make a global object and use that instead of the "_" naming convention in the global namespace.
 //
 var APP_NAME = "BasedOS";
-var APP_VERSION = "10.13";
+var APP_VERSION = "10.13.3";
 var STATUS = "Type command: <status> to make a status";
-var statusCanvas = null;
-var myStatus = null;
 
+//var statusCanvas = null;
+//var myStatus = null;
 var CPU_CLOCK_INTERVAL = 100;
 
 var TIMER_IRQ = 0;
@@ -25,6 +25,7 @@ var KEYBOARD_IRQ = 1;
 //
 // Global Variables
 //
+//var _PArray = new Array<TSOS.PCB>(); // the Processes
 var _CPU;
 
 var _OSclock = 0;
@@ -44,6 +45,9 @@ var _Kernel;
 var _KernelInterruptQueue = null;
 var _KernelBuffers = null;
 var _KernelInputQueue = null;
+
+var _Memory;
+var _MemoryManager;
 
 // Standard input and output
 var _StdIn = null;

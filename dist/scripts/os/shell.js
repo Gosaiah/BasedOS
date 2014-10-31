@@ -388,10 +388,14 @@ var TSOS;
             }
             if (program.length == 0 || program.length % 2 != 0) {
                 validated = false;
+            } else {
+                if (charCheck !== ' ') {
+                    memoryString += program.charAt(i);
+                }
             }
 
             if (validated) {
-                //_MemoryManager.loadMemory(memoryString);
+                _MemoryManager.loadMemory(memoryString);
                 _StdOut.putText("Lil B loves you.... program load successful #taskForce.");
             } else {
                 _StdOut.putText("Lil B is not pleased. Program Invalid.");
