@@ -29,13 +29,6 @@ var TSOS;
             // Get a global reference to the drawing context.
             _DrawingContext = _Canvas.getContext('2d');
 
-            // Get a global Reference to the status bar
-            _StatusCanvas = document.getElementById("statusCanvas");
-            _StatusCanvas = _StatusCanvas.getContext('2d');
-
-            // Enable the text functions
-            TSOS.CanvasTextFunctions.enable(_StatusCanvas);
-
             // Enable the added-in canvas text functions (see canvastext.ts for provenance and details).
             TSOS.CanvasTextFunctions.enable(_DrawingContext); // Text functionality is now built in to the HTML5 canvas. But this is old-school, and fun.
 
@@ -86,14 +79,14 @@ var TSOS;
             document.getElementById("display").focus();
 
             // ... Create and initialize the CPU (because it's part of the hardware)  ...
-            _CPU = new Cpu();
+            _CPU = new TSOS.Cpu();
             _CPU.init();
 
             // ... then set the host clock pulse ...
-            _hardwareClockID = setInterval(Devices.hostClockPulse, CPU_CLOCK_INTERVAL);
+            _hardwareClockID = setInterval(TSOS.Devices.hostClockPulse, CPU_CLOCK_INTERVAL);
 
             // .. and call the OS Kernel Bootstrap routine.
-            _Kernel = new Kernel();
+            _Kernel = new TSOS.Kernel();
             _Kernel.krnBootstrap();
         };
 

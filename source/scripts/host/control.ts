@@ -79,10 +79,6 @@ module TSOS
             // Update the log console.
             var taLog = <HTMLInputElement> document.getElementById("taHostLog");
             taLog.value = str + taLog.value;
-
-            var statusBar = <HTMLParagraphElement> document.getElementById('taStatusBarDate');
-            var date = new Date();
-            statusBar.innerHtml = date.toDateString() + " " + date.toLocalTimeString();
             // Optionally update a log database or some streaming service.
         }
 
