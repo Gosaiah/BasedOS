@@ -139,6 +139,14 @@ var TSOS;
             }
         };
 
+        Shell.prototype.getCommands = function () {
+            var commands = [];
+            for (var i = 0; i < this.commandList.length; i++) {
+                commands[i] = this.commandList[i].command;
+            }
+            return commands;
+        };
+
         // args is an option parameter, ergo the ? which allows TypeScript to understand that
         Shell.prototype.execute = function (fn, args) {
             // We just got a command, so advance the line...

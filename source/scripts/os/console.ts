@@ -22,7 +22,8 @@ module TSOS
                     public currentYPosition = _DefaultFontSize,
                     public buffer = "",
                     public history = [],
-                    public historyIndex = history.length) {
+                    public historyIndex = history.length,
+                    public cmdBuffer:string[] = []) {
 
         }
 
@@ -54,8 +55,8 @@ module TSOS
                 { //     Enter key
                     // The enter key marks the end of a console command, so ...
                     // ... tell the shell ...
-                    this.history[this.history.length] = this.buffer;
-                    this.historyIndex = this.history.length;
+                    //this.history[this.history.length] = this.buffer;
+                    //this.historyIndex = this.history.length;
                     _OsShell.handleInput(this.buffer);
                     // ... and reset our buffer.
                     this.buffer = "";
@@ -74,6 +75,8 @@ module TSOS
                         // autocomplete with tab button
                         if(chr == String.fromCharCode(9))
                         {
+                            //this.tabComplete(this.buffer);
+                            
                             var ourBuffer,matchFound;
                             ourBuffer = this.buffer.toString();
                             matchFound = false;
@@ -91,11 +94,13 @@ module TSOS
                             {
                                 this.replaceBuffer(ourBuffer);
                             }
+                            
                         }
                         else 
                         {
-                            if(chr == "upArrow")
+                            if(chr == "upArrow")//String.fromCharCode(38)) //if(chr == "upArrow")
                             {
+
                                 if(this.historyIndex >  0)
                                 {
                                     var pastCommands = this.history[this.historyIndex - 1]
@@ -105,14 +110,14 @@ module TSOS
                             }
                             else 
                             {
-                                    if(chr == "downArrow")
+                                    if(chr == String.fromCharCode(40)) //"downArrow")
                                     {
-                                        if(this.historyIndex < this.history.length - 1)
+                                        /*if(this.historyIndex < this.history.length - 1)
                                         {
                                             var pastCommands = this.history[this.historyIndex + 1]
                                             this.replaceBuffer(pastCommands);
                                             this.historyIndex = this.historyIndex + 1;
-                                        }
+                                        }*/
                                     }
                                 else 
                                 {
@@ -231,6 +236,43 @@ module TSOS
             }
             return matchingString;
         }
+
+        public tabComplete(buffer):void
+        {
+            var commands:string[] = [];
+            var commandList = _OsShell.getCommands();
+            for(var i = 0; i < commandList[i]; i++)
+            {
+                var cmd = commandList[i];
+                if(Console.startsWith(buffer, cmd))
+                {
+                    commands[commands.length] = commandList[i];
+                }
+            }
+            if(commands.length == 1)
+            {
+                var textAdd:string = commands[0].substring(this.buffer.length, commands[0].length);
+                this.putText(textAdd);
+                this.buffer += textAdd;
+            }
+        }
+
+        public static startsWith(arg1:string, arg2:string):boolean
+        {
+            if(arg1.length > arg2.length)
+            {
+                return false;
+            }
+            for(var i = 0; i < arg1.length; i++)
+            {
+                if(arg1.charAt(i) !== arg2.charAt(i))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
 
         public backSpace(text): void
         {

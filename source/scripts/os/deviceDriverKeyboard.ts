@@ -61,7 +61,7 @@ module TSOS
                     chr = String.fromCharCode(keyCode);
                 }
                 // TODO: Check for caps-lock and handle as shifted if so.
-                _KernelInputQueue.enqueue(chr);  v q
+                _KernelInputQueue.enqueue(chr);  //v q
             } 
             else
             {
