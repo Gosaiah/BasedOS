@@ -327,21 +327,57 @@ module TSOS
 
         public shellStatus(args)
         {
-            if(args.length > 0)
+            var element = <HTMLParagraphElement> document.getElementById('taStatusBarStatus');
+            element.innerHTML = args[0];
+            /*if(args.length > 0)
             {
                 STATUS = args[0];
             }
             else
             {
                 _StdOut.putText("Usage: status <string>  Please supply a string");
-            }
+            }*/
         }
 
         public shellDate(args)
         {
+            var date, clock, hour, mins, period;
+            date = new Date();
+            hrs = date.getHours();
+            period = "AM";
+            if(hrs == 0)  
+            {   
+                hour = "" + 12;    
+            }
+            else if(hrs > 12)  
+            {   
+                hour = "" + (hour - 12);    
+                period = "PM";    
+            } 
+            else if(hrs == 12) 
+            {   
+                hour += hrs;  
+                period = "PM";  
+            }   
+            else    
+            {   
+                hour += hrs;  
+            }
+
+            mins = date.getMinutes();
+            var min = "";
+            if(mins < 10)
+            {
+                min = 0 + mins;
+            }
+            else
+            {
+                min += mins;
+            }
+            _StdOut.putText(date.toLocaleDateString() + " " + hour + ":" + min + " " + period);
             // var now = new Date();
             //_StdOut.putText(now.getMonth
-            _StdOut.putText("TEMP DATE STRING");       
+            //_StdOut.putText("TEMP DATE STRING");       
         }
 
         public shellWhereAmI(args) 
