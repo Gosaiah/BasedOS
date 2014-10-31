@@ -423,37 +423,42 @@ module TSOS
 
         public shellLoad(args) 
         {
-            var input = "";
-            var hexCharacters = ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"," "];
-            // make all text lower case from the User Program Input
-            input = (<HTMLInputElement>document.getElementById("taProgramInput")).value.trim().toLowerCase();
+            //var input = "";
+            var input:HTMLTextAreaElement = <HTMLTextAreaElement> document.getElementById("taProgramInput");
+            //var program, validated, charCheck;
+            var program:string = input.value;
+            program = program.trim();
+            var memoryString = "";
+            var validated:boolean = true;
 
-            //if blank ...not good
-            if(input === "")
+            for(var i = 0; i < program.length; i++)
             {
-                _StdOut.putText("Awaiting orders #taskForce");
-            }
-            else 
-            {
-                // if not all numbers are hex...not good enough
-                for (var i = 0; i < input.length; i++)
+                var charCheck = program.charAt(i);
+                if(!( (charCheck >= 'A' && charCheck <= 'F') || (charCheck >= 'a' && charCheck <= 'f') || (charCheck >= '0' && charCheck <= '9') || charCheck === ' '))
                 {
-                    if (hexCharacters.indexOf(input.charAt(i)) === -1 && i === input.length - 1){
-                        _StdOut.putText("orders received. wait wat? #taskForce");
-                    }
-                
-                    else 
+                    validated = false;
+                }
+                else
+                {
+                    if(charCheck !== ' ')
                     {
-                        // if all chars are hex we are good
-                        var tempLength = input.length-1;
-                        if(i === tempLength)
-                        {    
-                            _MemoryManager.loadMemory(memoryString);           
-                            _StdOut.putText("Lil B loves you.... and your hex #taskForce");
-                        }
+                        memoryString += program.charAt(i);
                     }
                 }
+            }
+            if(program.length == 0 || program.length % 2 !=0)
+            {
+                validated = false;
+            }
 
+            if(validated)
+            {
+                //_MemoryManager.loadMemory(memoryString);
+                _StdOut.putText("Lil B loves you.... program load successful #taskForce.");
+            }
+            else
+            {
+                _StdOut.putText("Lil B is not pleased. Program Invalid.");
             }
         }
 

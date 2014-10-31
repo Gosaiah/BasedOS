@@ -338,28 +338,34 @@ var TSOS;
         };
 
         Shell.prototype.shellLoad = function (args) {
-            var input = "";
-            var hexCharacters = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f", " "];
+            //var input = "";
+            var input = document.getElementById("taProgramInput");
 
-            // make all text lower case from the User Program Input
-            input = document.getElementById("taProgramInput").value.trim().toLowerCase();
+            //var program, validated, charCheck;
+            var program = input.value;
+            program = program.trim();
+            var memoryString = "";
+            var validated = true;
 
-            //if blank ...not good
-            if (input === "") {
-                _StdOut.putText("Awaiting orders #taskForce");
-            } else {
-                for (var i = 0; i < input.length; i++) {
-                    if (hexCharacters.indexOf(input.charAt(i)) === -1 && i === input.length - 1) {
-                        _StdOut.putText("orders received. wait wat? #taskForce");
-                    } else {
-                        // if all chars are hex we are good
-                        var tempLength = input.length - 1;
-                        if (i === tempLength) {
-                            _MemoryManager.loadMemory(memoryString);
-                            _StdOut.putText("Lil B loves you.... and your hex #taskForce");
-                        }
+            for (var i = 0; i < program.length; i++) {
+                var charCheck = program.charAt(i);
+                if (!((charCheck >= 'A' && charCheck <= 'F') || (charCheck >= 'a' && charCheck <= 'f') || (charCheck >= '0' && charCheck <= '9') || charCheck === ' ')) {
+                    validated = false;
+                } else {
+                    if (charCheck !== ' ') {
+                        memoryString += program.charAt(i);
                     }
                 }
+            }
+            if (program.length == 0 || program.length % 2 != 0) {
+                validated = false;
+            }
+
+            if (validated) {
+                //_MemoryManager.loadMemory(memoryString);
+                _StdOut.putText("Lil B loves you.... program load successful #taskForce.");
+            } else {
+                _StdOut.putText("Lil B is not pleased. Program Invalid.");
             }
         };
 
