@@ -79,6 +79,10 @@ module TSOS
             // Update the log console.
             var taLog = <HTMLInputElement> document.getElementById("taHostLog");
             taLog.value = str + taLog.value;
+
+            var statusBar = <HTMLParagraphElement> document.getElementById("taStatusBarDate");
+            var date = new Date();
+            statusBar.innerHTML = date.toDateString() + " " + date.toLocaleTimeString();
             // Optionally update a log database or some streaming service.
         }
 
@@ -102,6 +106,9 @@ module TSOS
             _CPU = new Cpu();
             _CPU.init();
 
+            var statusBar = document.getElementById('taStatusBarStatus');
+            statusBar.innerHTML = "On";
+
             // ... then set the host clock pulse ...
             _hardwareClockID = setInterval(Devices.hostClockPulse, CPU_CLOCK_INTERVAL);
             // .. and call the OS Kernel Bootstrap routine.
@@ -113,10 +120,15 @@ module TSOS
         {
             Control.hostLog("Emergency halt", "host");
             Control.hostLog("Attempting Kernel shutdown.", "host");
+
+            var statusBar = document.getElementById('taStatusBarStatus');
+            statusBar.innerHTML = "Off";
             // Call the OS shutdown routine.
             _Kernel.krnShutdown();
             // Stop the interval that's simulating our clock pulse.
             clearInterval(_hardwareClockID);
+            var statusBar = document.getElementById('taStatusBarDate');
+            statusBar.innerHTML = "Unavailable";
             // TODO: Is there anything else we need to do here?
         }
 

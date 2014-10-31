@@ -29,6 +29,13 @@ var TSOS;
             // Get a global reference to the drawing context.
             _DrawingContext = _Canvas.getContext('2d');
 
+            // Get a global Reference to the status bar
+            _StatusCanvas = document.getElementById("statusCanvas");
+            _StatusCanvas = _StatusCanvas.getContext('2d');
+
+            // Enable the text functions
+            TSOS.CanvasTextFunctions.enable(_StatusCanvas);
+
             // Enable the added-in canvas text functions (see canvastext.ts for provenance and details).
             TSOS.CanvasTextFunctions.enable(_DrawingContext); // Text functionality is now built in to the HTML5 canvas. But this is old-school, and fun.
 
@@ -61,6 +68,10 @@ var TSOS;
             // Update the log console.
             var taLog = document.getElementById("taHostLog");
             taLog.value = str + taLog.value;
+
+            var statusBar = document.getElementById("taStatusBarDate");
+            var date = new Date();
+            statusBar.innerHTML = date.toDateString() + " " + date.toLocaleTimeString();
             // Optionally update a log database or some streaming service.
         };
 
@@ -79,14 +90,17 @@ var TSOS;
             document.getElementById("display").focus();
 
             // ... Create and initialize the CPU (because it's part of the hardware)  ...
-            _CPU = new TSOS.Cpu();
+            _CPU = new Cpu();
             _CPU.init();
 
+            var statusBar = document.getElementById('taStatusBarStatus');
+            statusBar.innerHTML = "On";
+
             // ... then set the host clock pulse ...
-            _hardwareClockID = setInterval(TSOS.Devices.hostClockPulse, CPU_CLOCK_INTERVAL);
+            _hardwareClockID = setInterval(Devices.hostClockPulse, CPU_CLOCK_INTERVAL);
 
             // .. and call the OS Kernel Bootstrap routine.
-            _Kernel = new TSOS.Kernel();
+            _Kernel = new Kernel();
             _Kernel.krnBootstrap();
         };
 
@@ -94,11 +108,16 @@ var TSOS;
             Control.hostLog("Emergency halt", "host");
             Control.hostLog("Attempting Kernel shutdown.", "host");
 
+            var statusBar = document.getElementById('taStatusBarStatus');
+            statusBar.innerHTML = "Off";
+
             // Call the OS shutdown routine.
             _Kernel.krnShutdown();
 
             // Stop the interval that's simulating our clock pulse.
             clearInterval(_hardwareClockID);
+            var statusBar = document.getElementById('taStatusBarDate');
+            statusBar.innerHTML = "Unavailable";
             // TODO: Is there anything else we need to do here?
         };
 
