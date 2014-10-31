@@ -34,6 +34,9 @@ module TSOS
             // Get a global reference to the canvas.  TODO: Move this stuff into a Display Device Driver, maybe?
             _Canvas = <HTMLCanvasElement>document.getElementById('display');
 
+            var statusBar = <HTMLParagraphElement> document.getElementById('taStatusBarStatus');
+            statusBar.innerHTML = "On";
+
             // Get a global reference to the drawing context.
             _DrawingContext = _Canvas.getContext('2d');
 
@@ -79,6 +82,10 @@ module TSOS
             // Update the log console.
             var taLog = <HTMLInputElement> document.getElementById("taHostLog");
             taLog.value = str + taLog.value;
+
+            var statusBar = <HTMLParagraphElement> document.getElementById("taStatusBarDate");
+            var date = new Date();
+            statusBar.innerHTML = date.toDateString() + " " + date.toLocaleTimeString();
             // Optionally update a log database or some streaming service.
         }
 
