@@ -486,17 +486,10 @@ module TSOS
             {
                 validated = false;
             }
-            else
-            {
-                if(charCheck !== ' ')
-                {
-                    memoryString += program.charAt(i);
-                }
-            }
 
             if(validated)
             {
-                _MemoryManager.loadMemory(memoryString);
+                //_MemoryManager.loadMemory(memoryString);
                 _StdOut.putText("Lil B loves you.... program load successful #taskForce.");
             }
             else
