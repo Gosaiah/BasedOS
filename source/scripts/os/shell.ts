@@ -327,16 +327,14 @@ module TSOS
 
         public shellStatus(args)
         {
-            var test = <HTMLParagraphElement> document.getElementById("taStatusBarDate");
-            test.innerHTML = args[0];
-            /*if(args.length > 0)
+            if(args.length > 0)
             {
                 STATUS = args[0];
             }
             else
             {
                 _StdOut.putText("Usage: status <string>  Please supply a string");
-            }*/
+            }
         }
 
         public shellDate(args)
@@ -424,9 +422,8 @@ module TSOS
         }
 
         public shellLoad(args) 
-        {/*
+        {
             var input = "";
-            var validated;
             var hexCharacters = ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"," "];
             // make all text lower case from the User Program Input
             input = (<HTMLInputElement>document.getElementById("taProgramInput")).value.trim().toLowerCase();
@@ -435,15 +432,13 @@ module TSOS
             if(input === "")
             {
                 _StdOut.putText("Awaiting orders #taskForce");
-
             }
             else 
             {
                 // if not all numbers are hex...not good enough
                 for (var i = 0; i < input.length; i++)
                 {
-                    if (hexCharacters.indexOf(input.charAt(i)) === -1 && i === input.length - 1)
-                    {
+                    if (hexCharacters.indexOf(input.charAt(i)) === -1 && i === input.length - 1){
                         _StdOut.putText("orders received. wait wat? #taskForce");
                     }
                 
@@ -459,46 +454,7 @@ module TSOS
                     }
                 }
 
-
-            }*/
-            var input = "";
-            input = <HTMLTextAreaElement> document.getElementById("taProgramInput");
-            var program, validated, charCheck;
-            program = input.value;
-            program = program.trim();
-            var memoryString = "";
-            validated = true;
-
-            for(var i = 0; i < program.length; i++)
-            {
-                charCheck = program.charAt(i);
-                if(!( (charCheck >= 'A' && charCheck <+ 'F') || (c >= 'a' && c <= 'f') || (c >= '0' && <number>charCheck <= '9') || charCheck === ' '))
-                {
-                    validated = false;
-                }
-                else
-                {
-                    if(charCheck !== ' ')
-                    {
-                        memoryString += program.charAt(i);
-                    }
-                }
             }
-            if(program.length == 0 || program.length % 2 !=0)
-            {
-                validated = false;
-            }
-
-            if(validated)
-            {
-                //_MemoryManager.loadMemory(memoryString);
-                _StdOut.putText("Lil B loves you.... program load successful #taskForce.");
-            }
-            else
-            {
-                _StdOut.putText("Lil B is not pleased. Program Invalid.");
-            }
-
         }
 
         public shellRun(pId)

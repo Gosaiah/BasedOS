@@ -15,7 +15,6 @@
    <script type="text/javascript" src="dist/scripts/host/control.js"></script>
    <script type="text/javascript" src="dist/scripts/host/devices.js"></script>
    <script type="text/javascript" src="dist/scripts/host/cpu.js"></script>
-   <script type="text/javascript" src="dist/scripts/host/memory.js"></script>
 
    <!-- Virtual OS Routines: Make sure Kernel code is last, since it needs those above it. -->
    <script type="text/javascript" src="dist/scripts/os/interrupt.js"></script>
@@ -24,14 +23,13 @@
    <script type="text/javascript" src="dist/scripts/os/deviceDriver.js"></script>
    <script type="text/javascript" src="dist/scripts/os/deviceDriverKeyboard.js"></script>
    <script type="text/javascript" src="dist/scripts/os/queue.js"></script>
-   <script type="text/javascript" src="source/scripts/os/shell.js"></script>
-   <script type="text/javascript" src="source/scripts/os/shellCommand.js"></script>
-   <script type="text/javascript" src="source/scripts/os/userCommand.js"></script>
+   <script type="text/javascript" src="dist/scripts/os/shell.js"></script>
+   <script type="text/javascript" src="dist/scripts/os/shellCommand.js"></script>
+   <script type="text/javascript" src="dist/scripts/os/userCommand.js"></script>
    <script type="text/javascript" src="dist/scripts/os/kernel.js"></script>
-   <script type="text/javascript" src="dist/scripts/os/memorymanager.js"></script>
 
    <!-- Other Routines -->
-   <script type="text/javascript" src="source/scripts/utils.js"></script>
+   <script type="text/javascript" src="dist/scripts/utils.js"></script>
    <!-- Uncomment this line below to enable Glados testing -->
    <!-- <script type="text/javascript" src="http://www.labouseur.com/courses/os/projects/glados.js"></script> -->
 </head>
@@ -85,14 +83,8 @@
       </canvas>
    </div>
 
-   <div id="divMemory" style="height: 300px; width: 300px; overflow-y: scroll;">
-            <table id="memory">
-                <tbody></tbody>
-            </table>
-    </div>
-
    <div id="divLog" style="margin-left:520px;"> 
-      <div><p id="taStatusBarStatus">Off</p><p id="taStatusBarDate">Unavailable</p></div>
+    
       <label>
          Host Log
          <br>
