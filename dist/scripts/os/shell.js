@@ -269,7 +269,11 @@ var TSOS;
 
         Shell.prototype.shellStatus = function (args) {
             var element = document.getElementById('taStatusBarStatus');
-            element.innerHTML = args[0];
+            if (args.length > 0) {
+                element.innerHTML = "Status: " + args[0];
+            } else {
+                _StdOut.putText("Usage: status <string>  Please supply a string");
+            }
             /*if(args.length > 0)
             {
             STATUS = args[0];
@@ -281,26 +285,26 @@ var TSOS;
         };
 
         Shell.prototype.shellDate = function (args) {
-            var date, clock, hour, mins, period;
+            var date, clock, hour, min, mins, period;
             date = new Date();
-            hrs = date.getHours();
+            clock = date.getHours();
+            mins = date.getMinutes();
+            min = "";
             period = "AM";
-            if (hrs == 0) {
+            if (clock == 0) {
                 hour = "" + 12;
-            } else if (hrs > 12) {
+            } else if (clock > 12) {
                 hour = "" + (hour - 12);
                 period = "PM";
-            } else if (hrs == 12) {
-                hour += hrs;
+            } else if (clock == 12) {
+                hour += clock;
                 period = "PM";
             } else {
-                hour += hrs;
+                hour += clock;
             }
 
-            mins = date.getMinutes();
-            var min = "";
             if (mins < 10) {
-                min = 0 + mins;
+                min = "0" + mins; //add the extra 0 for the tens place
             } else {
                 min += mins;
             }
