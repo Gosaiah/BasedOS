@@ -80,33 +80,37 @@ var TSOS;
                             if (matchFound) {
                                 this.replaceBuffer(ourBuffer);
                             }
-                        } else if (chr == "upArrow") {
-                            if (this.historyIndex > 0) {
-                                var pastCommands = this.history[this.historyIndex - 1];
-                                this.replaceBuffer(pastCommands);
-                                this.historyIndex = this.historyIndex - 1;
-                            }
-                        } else if (chr == String.fromCharCode(40)) {
-                            /*if(this.historyIndex < this.history.length - 1)
-                            {
-                            var pastCommands = this.history[this.historyIndex + 1]
-                            this.replaceBuffer(pastCommands);
-                            this.historyIndex = this.historyIndex + 1;
-                            }*/
                         } else {
-                            // This is a "normal" character, so ...
-                            // ... draw it on the screen...
-                            this.putText(chr);
+                            if (chr == "upArrow") {
+                                if (this.historyIndex > 0) {
+                                    var pastCommands = this.history[this.historyIndex - 1];
+                                    this.replaceBuffer(pastCommands);
+                                    this.historyIndex = this.historyIndex - 1;
+                                }
+                            } else {
+                                if (chr == String.fromCharCode(40)) {
+                                    /*if(this.historyIndex < this.history.length - 1)
+                                    {
+                                    var pastCommands = this.history[this.historyIndex + 1]
+                                    this.replaceBuffer(pastCommands);
+                                    this.historyIndex = this.historyIndex + 1;
+                                    }*/
+                                } else {
+                                    // This is a "normal" character, so ...
+                                    // ... draw it on the screen...
+                                    this.putText(chr);
 
-                            // ... and add it to our buffer.
-                            this.buffer += chr;
+                                    // ... and add it to our buffer.
+                                    this.buffer += chr;
+                                }
+                            }
                         }
                     }
                 }
+                // TODO: Write a case for Ctrl-C.
             }
         };
 
-        // TODO: Write a case for Ctrl-C.
         Console.prototype.putText = function (text) {
             // My first inclination here was to write two functions: putChar() and putString().
             // Then I remembered that JavaScript is (sadly) untyped and it won't differentiate

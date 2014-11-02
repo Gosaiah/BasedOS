@@ -96,46 +96,40 @@ module TSOS
                             }
                             
                         }
+                        else if(chr == "upArrow") //String.fromCharCode(38)) //if(chr == "upArrow")
+                        {
+                            if(this.historyIndex >  0)
+                            {
+                                var pastCommands = this.history[this.historyIndex - 1]
+                                this.replaceBuffer(pastCommands);
+                                this.historyIndex = this.historyIndex - 1;
+                            }
+                        }
+                        else if(chr == String.fromCharCode(40)) //"downArrow")
+                        {
+                            /*if(this.historyIndex < this.history.length - 1)
+                            {
+                                var pastCommands = this.history[this.historyIndex + 1]
+                                this.replaceBuffer(pastCommands);
+                                this.historyIndex = this.historyIndex + 1;
+                            }*/
+                        }
                         else 
                         {
-                            if(chr == "upArrow")//String.fromCharCode(38)) //if(chr == "upArrow")
-                            {
-
-                                if(this.historyIndex >  0)
-                                {
-                                    var pastCommands = this.history[this.historyIndex - 1]
-                                    this.replaceBuffer(pastCommands);
-                                    this.historyIndex = this.historyIndex - 1;
-                                }
-                            }
-                            else 
-                            {
-                                    if(chr == String.fromCharCode(40)) //"downArrow")
-                                    {
-                                        /*if(this.historyIndex < this.history.length - 1)
-                                        {
-                                            var pastCommands = this.history[this.historyIndex + 1]
-                                            this.replaceBuffer(pastCommands);
-                                            this.historyIndex = this.historyIndex + 1;
-                                        }*/
-                                    }
-                                else 
-                                {
-                                    // This is a "normal" character, so ...
-                                    // ... draw it on the screen...
-                                    this.putText(chr);
-                                    // ... and add it to our buffer.
-                                    this.buffer += chr;
-                                }
-                            }
+                            // This is a "normal" character, so ...
+                            // ... draw it on the screen...
+                            this.putText(chr);
+                            // ... and add it to our buffer.
+                            this.buffer += chr;
                         }
                     }
                 }
-                // TODO: Write a case for Ctrl-C.
             }
         }
+                // TODO: Write a case for Ctrl-C.
 
-        public putText(text): void 
+
+        public putText(text): void zsw3 38
         {
             // My first inclination here was to write two functions: putChar() and putString().
             // Then I remembered that JavaScript is (sadly) untyped and it won't differentiate

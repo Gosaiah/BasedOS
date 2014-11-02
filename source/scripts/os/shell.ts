@@ -366,17 +366,17 @@ module TSOS
             period = "AM";
             if(clock == 0)  
             {   
-                hour = "" + 12;    
+                hour = 12;    
             }
             else if(clock > 12)  //fix for military time etc
             {   
-                hour = "" + (hour - 12);    
+                hour = clock - 12;    
                 period = "PM";    
             } 
             else if(clock == 12) 
             {   
                 hour += clock;  
-                period = "PM";  
+                period = "PM";
             }   
             else    
             {   
