@@ -36,24 +36,27 @@ module TSOS
             _Kernel.krnTrace("Key code:" + keyCode + " shifted:" + isShifted);
             var chr = "";
             // Check to see if we even want to deal with the key that was pressed.
-            // Check for a backspaces(8) and tabs(9)
+            // Check for up Arrow
             if(keyCode == 38)
             {
                 chr = "upArrow";
                 _KernelInputQueue.enqueue(chr);
             }
+            // Check for down Arrow
             if(keyCode == 40)
             {
                 chr = "downArrow";
                 _KernelInputQueue.enqueue(chr);
             }
+            // Check for a backspaces(8) and tabs(9)
             if(keyCode == 8 || keyCode == 9)
             {
                 chr = String.fromCharCode(keyCode);
                 _KernelInputQueue.enqueue(chr);
             }
             if (((keyCode >= 65) && (keyCode <= 90)) || ((keyCode >= 97) && (keyCode <= 123))) 
-            {  // A..Z     // a..z 
+            {  
+                // 65 -> 90 = A..Z     // 97 -> 123 = a..z 
                 // Determine the character we want to display.
                 // Assume it's lowercase...
                 chr = String.fromCharCode(keyCode + 32);
@@ -63,7 +66,7 @@ module TSOS
                     chr = String.fromCharCode(keyCode);
                 }
                 // TODO: Check for caps-lock and handle as shifted if so.
-                _KernelInputQueue.enqueue(chr);  //v q
+                _KernelInputQueue.enqueue(chr);
             } 
             else
             {

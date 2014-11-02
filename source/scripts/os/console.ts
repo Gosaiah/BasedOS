@@ -22,8 +22,7 @@ module TSOS
                     public currentYPosition = _DefaultFontSize,
                     public buffer = "",
                     public history = [],
-                    public historyIndex = history.length,
-                    public cmdBuffer:string[] = []) {
+                    public historyIndex = history.length) {
 
         }
 
@@ -213,7 +212,7 @@ module TSOS
             matchingString = true;
             partialStringLength = partialString.length;
             largerStringLength = largerString.length;
-            //not contained if partial is as long or longer then larger
+            // not contained if partial is as long or longer then larger
             if(partialStringLength >= largerStringLength)
             {
                 return false;
@@ -231,43 +230,6 @@ module TSOS
             return matchingString;
         }
 
-        //work in progress
-        /*public tabComplete(buffer):void
-        {
-            var commands:string[] = [];
-            var commandList = _OsShell.getCommands();
-            for(var i = 0; i < commandList[i]; i++)
-            {
-                var cmd = commandList[i];
-                if(Console.startsWith(buffer, cmd))
-                {
-                    commands[commands.length] = commandList[i];
-                }
-            }
-            if(commands.length == 1)
-            {
-                var textAdd:string = commands[0].substring(this.buffer.length, commands[0].length);
-                this.putText(textAdd);
-                this.buffer += textAdd;
-            }
-        }
-
-        public static startsWith(arg1:string, arg2:string):boolean
-        {
-            if(arg1.length > arg2.length)
-            {
-                return false;
-            }
-            for(var i = 0; i < arg1.length; i++)
-            {
-                if(arg1.charAt(i) !== arg2.charAt(i))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }*/
-
 
         public backSpace(text): void
         {
@@ -279,7 +241,6 @@ module TSOS
             {
                 this.currentXPosition = this.currentXPosition - lenghtOfChar;
             }
-
         }
         
         public replaceBuffer(text)

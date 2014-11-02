@@ -274,14 +274,6 @@ var TSOS;
             } else {
                 _StdOut.putText("Usage: status <string>  Please supply a string");
             }
-            /*if(args.length > 0)
-            {
-            STATUS = args[0];
-            }
-            else
-            {
-            _StdOut.putText("Usage: status <string>  Please supply a string");
-            }*/
         };
 
         Shell.prototype.shellDate = function (args) {
@@ -309,9 +301,6 @@ var TSOS;
                 min += mins;
             }
             _StdOut.putText(date.toLocaleDateString() + " " + hour + ":" + min + " " + period);
-            // var now = new Date();
-            //_StdOut.putText(now.getMonth
-            //_StdOut.putText("TEMP DATE STRING");
         };
 
         Shell.prototype.shellWhereAmI = function (args) {
@@ -368,15 +357,17 @@ var TSOS;
             // Call Kernel trap
             _Kernel.krnTrapError("FakeBased. BasedWorld does not approve -_-");
 
-            //fill canvas with black
-            //_DrawingContext.fillStyle = "black";
-            //_DrawingContext.fillRect(0, 0, _Canvas.width, _Canvas.height);
+            // clear display
             var element = document.getElementById("display");
             element.style.display = "none";
+
+            // show based gif
             var element2 = document.getElementById("divConsole");
             element2.style.backgroundImage = "url('dist/images/basedgod.gif')";
+
+            // chage status
             var element3 = document.getElementById('taStatusBarStatus');
-            element3.innerHTML = "Status: " + "THANKYOUBASED GOD";
+            element3.innerHTML = "Status: " + "THANK YOU BASED GOD";
             _Kernel.krnShutdown();
         };
 

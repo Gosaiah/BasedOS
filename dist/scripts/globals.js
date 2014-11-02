@@ -10,10 +10,7 @@ Operating System Concepts 8th edition by Silberschatz, Galvin, and Gagne.  ISBN 
 // TODO: Make a global object and use that instead of the "_" naming convention in the global namespace.
 //
 var APP_NAME = "BasedOS";
-var APP_VERSION = "10.13.3";
-var STATUS = "Type command: <status> to make a status";
-var statusCanvas = null;
-var myStatus = null;
+var APP_VERSION = "11.02.2";
 
 var CPU_CLOCK_INTERVAL = 100;
 

@@ -8,7 +8,7 @@ Note: This is not the Shell.  The Shell is the "command line interface" (CLI) or
 var TSOS;
 (function (TSOS) {
     var Console = (function () {
-        function Console(currentFont, currentFontSize, currentXPosition, currentYPosition, buffer, history, historyIndex, cmdBuffer) {
+        function Console(currentFont, currentFontSize, currentXPosition, currentYPosition, buffer, history, historyIndex) {
             if (typeof currentFont === "undefined") { currentFont = _DefaultFontFamily; }
             if (typeof currentFontSize === "undefined") { currentFontSize = _DefaultFontSize; }
             if (typeof currentXPosition === "undefined") { currentXPosition = 0; }
@@ -16,7 +16,6 @@ var TSOS;
             if (typeof buffer === "undefined") { buffer = ""; }
             if (typeof history === "undefined") { history = []; }
             if (typeof historyIndex === "undefined") { historyIndex = history.length; }
-            if (typeof cmdBuffer === "undefined") { cmdBuffer = []; }
             this.currentFont = currentFont;
             this.currentFontSize = currentFontSize;
             this.currentXPosition = currentXPosition;
@@ -24,7 +23,6 @@ var TSOS;
             this.buffer = buffer;
             this.history = history;
             this.historyIndex = historyIndex;
-            this.cmdBuffer = cmdBuffer;
         }
         Console.prototype.init = function () {
             this.clearScreen();
@@ -56,25 +54,25 @@ var TSOS;
                     // ... and reset our buffer.
                     this.buffer = "";
                 } else {
+                    //backspace
                     if (chr === String.fromCharCode(8)) {
-                        //backspace
                         var charRemove = this.buffer.charAt(this.buffer.length - 1);
                         this.buffer = this.buffer.substring(0, this.buffer.length - 1);
                         this.backSpace(charRemove);
                     } else {
                         // autocomplete with tab button
                         if (chr == String.fromCharCode(9)) {
-                            //this.tabComplete(this.buffer);
                             var ourBuffer, matchFound;
                             ourBuffer = this.buffer.toString();
                             matchFound = false;
 
                             // dont forget to update this list later! (if ever changing/adding commands)
-                            var ourCommands = ["ver", "help", "shutdown", "cls", "man", "trace", "rot13", "prompt", "status", "date", "whereami", "portal", "bsod", "load"];
+                            var ourCommands = ["ver", "help", "shutdown", "cls", "man", "trace", "rot13", "prompt", "status", "date", "whereami", "portal", "bsod", "load", "run", "step"];
                             for (var k = 0; k < ourCommands.length; k++) {
                                 if ((this.containsCheck(ourBuffer, ourCommands[k])) && matchFound == false) {
                                     ourBuffer = ourCommands[k];
                                     matchFound = true;
+                                    // TODO: cycle through options later
                                 }
                             }
                             if (matchFound) {
@@ -181,7 +179,7 @@ var TSOS;
             partialStringLength = partialString.length;
             largerStringLength = largerString.length;
 
-            //not contained if partial is as long or longer then larger
+            // not contained if partial is as long or longer then larger
             if (partialStringLength >= largerStringLength) {
                 return false;
             } else {
@@ -194,41 +192,6 @@ var TSOS;
             return matchingString;
         };
 
-        /*public tabComplete(buffer):void
-        {
-        var commands:string[] = [];
-        var commandList = _OsShell.getCommands();
-        for(var i = 0; i < commandList[i]; i++)
-        {
-        var cmd = commandList[i];
-        if(Console.startsWith(buffer, cmd))
-        {
-        commands[commands.length] = commandList[i];
-        }
-        }
-        if(commands.length == 1)
-        {
-        var textAdd:string = commands[0].substring(this.buffer.length, commands[0].length);
-        this.putText(textAdd);
-        this.buffer += textAdd;
-        }
-        }
-        
-        public static startsWith(arg1:string, arg2:string):boolean
-        {
-        if(arg1.length > arg2.length)
-        {
-        return false;
-        }
-        for(var i = 0; i < arg1.length; i++)
-        {
-        if(arg1.charAt(i) !== arg2.charAt(i))
-        {
-        return false;
-        }
-        }
-        return true;
-        }*/
         Console.prototype.backSpace = function (text) {
             var lenghtOfChar = _DrawingContext.measureText(this.currentFont, this.currentFontSize, text);
             var heightY = _DefaultFontSize + _FontHeightMargin;

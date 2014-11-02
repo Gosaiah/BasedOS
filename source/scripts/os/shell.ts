@@ -346,14 +346,6 @@ module TSOS
             {
                 _StdOut.putText("Usage: status <string>  Please supply a string");
             }
-            /*if(args.length > 0)
-            {
-                STATUS = args[0];
-            }
-            else
-            {
-                _StdOut.putText("Usage: status <string>  Please supply a string");
-            }*/
         }
 
         public shellDate(args)
@@ -368,7 +360,7 @@ module TSOS
             {   
                 hour = 12;    
             }
-            else if(clock > 12)  //fix for military time etc
+            else if(clock > 12)  // fix for military time etc
             {   
                 hour = clock - 12;    
                 period = "PM";    
@@ -391,10 +383,7 @@ module TSOS
             {
                 min += mins;
             }
-            _StdOut.putText(date.toLocaleDateString() + " " + hour + ":" + min + " " + period);
-            // var now = new Date();
-            //_StdOut.putText(now.getMonth
-            //_StdOut.putText("TEMP DATE STRING");       
+            _StdOut.putText(date.toLocaleDateString() + " " + hour + ":" + min + " " + period);       
         }
 
         public shellWhereAmI(args) 
@@ -464,10 +453,6 @@ module TSOS
         {
             // Call Kernel trap
             _Kernel.krnTrapError("FakeBased. BasedWorld does not approve -_-");
-            //fill canvas with black
-            //_DrawingContext.fillStyle = "black";
-            //_DrawingContext.fillRect(0, 0, _Canvas.width, _Canvas.height);
-            
             // clear display
             var element:HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("display");
             element.style.display = "none";
