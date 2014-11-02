@@ -5,7 +5,7 @@
    <meta name="author"             content="Alan G. Labouseur" />
    <link rel="stylesheet" href="dist/styles/tsos.css" type="text/css" media="screen" />
    <title>
-      CakeOS - a browser-based virtual Operating System in TypeScript
+      BasedOS - a browser-based virtual Operating System in TypeScript
    </title>
 
    <!-- Globals CONSTANTS and _Variables. Must included be first. -->
@@ -64,6 +64,15 @@
              value="Reset"
              tabindex="2"
              onclick="TSOS.Control.hostBtnReset_click(this);">
+
+      <input type="button"
+             id = "btnStep"
+             name="brnStep"
+             class="normal_button"
+             disabled="disabled"
+             value="Step"
+             tabindex="3"
+             onclick="TSOS.Control.hostBtnStep_click(this);">
    </div>
 
    <div id="divConsole" style="margin:4px; width:500px; height:500px; float:left;">
@@ -75,6 +84,7 @@
    </div>
 
    <div id="divLog" style="margin-left:520px;"> 
+      <div><p id="taStatusBarStatus">Status: Off</p><p id="taStatusBarDate">Date: Unavailable</p></div>
     
       <label>
          Host Log
@@ -93,6 +103,32 @@
          <br>
          <textarea name="taProgramInput"
                    id  ="taProgramInput"
+                   rows="8"
+                   cols="48"
+         ></textarea>
+      </label>
+   </div>
+
+
+   <div id=""; >
+      <label>
+         <br>
+         Memory
+         <br>
+         <textarea name="taMemory"
+                   id  ="taMemory"
+                   rows="8"
+                   cols="48"
+         ></textarea>
+      </label>
+   </div>
+   <div id="" >
+      <label>
+         <br>
+         CPU
+         <br>
+         <textarea name="taCPU"
+                   id  ="taCPU"
                    rows="8"
                    cols="48"
          ></textarea>

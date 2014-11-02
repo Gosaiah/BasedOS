@@ -22,7 +22,8 @@ module TSOS
                     public currentYPosition = _DefaultFontSize,
                     public buffer = "",
                     public history = [],
-                    public historyIndex = history.length) {
+                    public historyIndex = history.length,
+                    public cmdBuffer:string[] = []) {
 
         }
 
@@ -59,12 +60,13 @@ module TSOS
                     _OsShell.handleInput(this.buffer);
                     // ... and reset our buffer.
                     this.buffer = "";
-                } 
+                }
                 else 
                 {
+                    //backspace
                     if (chr === String.fromCharCode(8)) 
                     { 
-                        //backspace
+                        
                         var charRemove = this.buffer.charAt(this.buffer.length - 1)
                         this.buffer = this.buffer.substring(0, this.buffer.length - 1);
                         this.backSpace(charRemove);
@@ -73,64 +75,61 @@ module TSOS
                     {
                         // autocomplete with tab button
                         if(chr == String.fromCharCode(9))
-                        {
+                        {   
                             var ourBuffer,matchFound;
                             ourBuffer = this.buffer.toString();
                             matchFound = false;
                             // dont forget to update this list later! (if ever changing/adding commands)
-                            var ourCommands = ["ver", "help", "shutdown", "cls", "man", "trace", "rot13", "prompt", "status", "date", "whereami", "portal", "bsod", "load"];
+                            var ourCommands = ["ver", "help", "shutdown", "cls", "man", "trace", "rot13", "prompt", "status", "date", "whereami", "portal", "bsod", "load", "run", "step"];
                             for(var k = 0; k < ourCommands.length; k++) 
                             {
                                 if ((this.containsCheck(ourBuffer, ourCommands[k])) && matchFound == false) 
                                 {
                                     ourBuffer = ourCommands[k];
                                     matchFound = true;
+                                    // TODO: cycle through options later
                                 }
                             }
                             if(matchFound)
                             {
                                 this.replaceBuffer(ourBuffer);
                             }
+                            
+                        }
+                        else if(chr == "upArrow") //String.fromCharCode(38)) //if(chr == "upArrow")
+                        {
+                            if(this.historyIndex >  0)
+                            {
+                                var pastCommands = this.history[this.historyIndex - 1]
+                                this.replaceBuffer(pastCommands);
+                                this.historyIndex = this.historyIndex - 1;
+                            }
+                        }
+                        else if(chr == "downArrow") //"downArrow")
+                        {
+                            if(this.historyIndex < this.history.length - 1)
+                            {
+                                var pastCommands = this.history[this.historyIndex + 1]
+                                this.replaceBuffer(pastCommands);
+                                this.historyIndex = this.historyIndex + 1;
+                            }
                         }
                         else 
                         {
-                            if(chr == "upArrow")
-                            {
-                                if(this.historyIndex >  0)
-                                {
-                                    var pastCommands = this.history[this.historyIndex - 1]
-                                    this.replaceBuffer(pastCommands);
-                                    this.historyIndex = this.historyIndex - 1;
-                                }
-                            }
-                            else 
-                            {
-                                    if(chr == "downArrow")
-                                    {
-                                        if(this.historyIndex < this.history.length - 1)
-                                        {
-                                            var pastCommands = this.history[this.historyIndex + 1]
-                                            this.replaceBuffer(pastCommands);
-                                            this.historyIndex = this.historyIndex + 1;
-                                        }
-                                    }
-                                else 
-                                {
-                                    // This is a "normal" character, so ...
-                                    // ... draw it on the screen...
-                                    this.putText(chr);
-                                    // ... and add it to our buffer.
-                                    this.buffer += chr;
-                                }
-                            }
+                            // This is a "normal" character, so ...
+                            // ... draw it on the screen...
+                            this.putText(chr);
+                            // ... and add it to our buffer.
+                            this.buffer += chr;
                         }
                     }
                 }
-                // TODO: Write a case for Ctrl-C.
             }
         }
+                // TODO: Write a case for Ctrl-C.
 
-        public putText(text): void 
+
+        public putText(text): void
         {
             // My first inclination here was to write two functions: putChar() and putString().
             // Then I remembered that JavaScript is (sadly) untyped and it won't differentiate
@@ -231,6 +230,44 @@ module TSOS
             }
             return matchingString;
         }
+
+        //work in progress
+        /*public tabComplete(buffer):void
+        {
+            var commands:string[] = [];
+            var commandList = _OsShell.getCommands();
+            for(var i = 0; i < commandList[i]; i++)
+            {
+                var cmd = commandList[i];
+                if(Console.startsWith(buffer, cmd))
+                {
+                    commands[commands.length] = commandList[i];
+                }
+            }
+            if(commands.length == 1)
+            {
+                var textAdd:string = commands[0].substring(this.buffer.length, commands[0].length);
+                this.putText(textAdd);
+                this.buffer += textAdd;
+            }
+        }
+
+        public static startsWith(arg1:string, arg2:string):boolean
+        {
+            if(arg1.length > arg2.length)
+            {
+                return false;
+            }
+            for(var i = 0; i < arg1.length; i++)
+            {
+                if(arg1.charAt(i) !== arg2.charAt(i))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }*/
+
 
         public backSpace(text): void
         {
