@@ -467,10 +467,16 @@ module TSOS
             //fill canvas with black
             //_DrawingContext.fillStyle = "black";
             //_DrawingContext.fillRect(0, 0, _Canvas.width, _Canvas.height);
+            
+            // clear display
             var element:HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("display");
             element.style.display = "none";
+            // show based gif
             var element2:HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("divConsole");
             element2.style.backgroundImage = "url('dist/images/basedgod.gif')";
+            // chage status
+            var element3 = <HTMLParagraphElement> document.getElementById('taStatusBarStatus');
+            element3.innerHTML = "Status: " + "THANK YOU BASED GOD";
             _Kernel.krnShutdown();
         }
 

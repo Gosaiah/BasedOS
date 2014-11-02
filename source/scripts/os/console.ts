@@ -55,17 +55,18 @@ module TSOS
                 { //     Enter key
                     // The enter key marks the end of a console command, so ...
                     // ... tell the shell ...
-                    //this.history[this.history.length] = this.buffer;
-                    //this.historyIndex = this.history.length;
+                    this.history[this.history.length] = this.buffer;
+                    this.historyIndex = this.history.length;
                     _OsShell.handleInput(this.buffer);
                     // ... and reset our buffer.
                     this.buffer = "";
-                } 
+                }
                 else 
                 {
+                    //backspace
                     if (chr === String.fromCharCode(8)) 
                     { 
-                        //backspace
+                        
                         var charRemove = this.buffer.charAt(this.buffer.length - 1)
                         this.buffer = this.buffer.substring(0, this.buffer.length - 1);
                         this.backSpace(charRemove);
@@ -74,20 +75,19 @@ module TSOS
                     {
                         // autocomplete with tab button
                         if(chr == String.fromCharCode(9))
-                        {
-                            //this.tabComplete(this.buffer);
-                            
+                        {   
                             var ourBuffer,matchFound;
                             ourBuffer = this.buffer.toString();
                             matchFound = false;
                             // dont forget to update this list later! (if ever changing/adding commands)
-                            var ourCommands = ["ver", "help", "shutdown", "cls", "man", "trace", "rot13", "prompt", "status", "date", "whereami", "portal", "bsod", "load"];
+                            var ourCommands = ["ver", "help", "shutdown", "cls", "man", "trace", "rot13", "prompt", "status", "date", "whereami", "portal", "bsod", "load", "run", "step"];
                             for(var k = 0; k < ourCommands.length; k++) 
                             {
                                 if ((this.containsCheck(ourBuffer, ourCommands[k])) && matchFound == false) 
                                 {
                                     ourBuffer = ourCommands[k];
                                     matchFound = true;
+                                    // TODO: cycle through options later
                                 }
                             }
                             if(matchFound)
@@ -105,14 +105,14 @@ module TSOS
                                 this.historyIndex = this.historyIndex - 1;
                             }
                         }
-                        else if(chr == String.fromCharCode(40)) //"downArrow")
+                        else if(chr == "downArrow") //"downArrow")
                         {
-                            /*if(this.historyIndex < this.history.length - 1)
+                            if(this.historyIndex < this.history.length - 1)
                             {
                                 var pastCommands = this.history[this.historyIndex + 1]
                                 this.replaceBuffer(pastCommands);
                                 this.historyIndex = this.historyIndex + 1;
-                            }*/
+                            }
                         }
                         else 
                         {
@@ -129,7 +129,7 @@ module TSOS
                 // TODO: Write a case for Ctrl-C.
 
 
-        public putText(text): void zsw3 38
+        public putText(text): void
         {
             // My first inclination here was to write two functions: putChar() and putString().
             // Then I remembered that JavaScript is (sadly) untyped and it won't differentiate
@@ -231,7 +231,8 @@ module TSOS
             return matchingString;
         }
 
-        public tabComplete(buffer):void
+        //work in progress
+        /*public tabComplete(buffer):void
         {
             var commands:string[] = [];
             var commandList = _OsShell.getCommands();
@@ -265,7 +266,7 @@ module TSOS
                 }
             }
             return true;
-        }
+        }*/
 
 
         public backSpace(text): void

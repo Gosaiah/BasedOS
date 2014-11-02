@@ -35,10 +35,12 @@ var TSOS;
             // Check to see if we even want to deal with the key that was pressed.
             // Check for a backspaces(8) and tabs(9)
             if (keyCode == 38) {
+                chr = "upArrow";
                 _KernelInputQueue.enqueue(chr);
             }
             if (keyCode == 40) {
-                _KernelInputQueue.enqueue("downArrow");
+                chr = "downArrow";
+                _KernelInputQueue.enqueue(chr);
             }
             if (keyCode == 8 || keyCode == 9) {
                 chr = String.fromCharCode(keyCode);

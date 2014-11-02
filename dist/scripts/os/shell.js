@@ -375,6 +375,8 @@ var TSOS;
             element.style.display = "none";
             var element2 = document.getElementById("divConsole");
             element2.style.backgroundImage = "url('dist/images/basedgod.gif')";
+            var element3 = document.getElementById('taStatusBarStatus');
+            element3.innerHTML = "Status: " + "THANKYOUBASED GOD";
             _Kernel.krnShutdown();
         };
 

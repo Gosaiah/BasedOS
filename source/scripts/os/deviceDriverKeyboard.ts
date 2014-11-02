@@ -39,11 +39,13 @@ module TSOS
             // Check for a backspaces(8) and tabs(9)
             if(keyCode == 38)
             {
-                _KernelInputQueue.enqueue("upArrow");
+                chr = "upArrow";
+                _KernelInputQueue.enqueue(chr);
             }
             if(keyCode == 40)
             {
-                _KernelInputQueue.enqueue("downArrow");
+                chr = "downArrow";
+                _KernelInputQueue.enqueue(chr);
             }
             if(keyCode == 8 || keyCode == 9)
             {
