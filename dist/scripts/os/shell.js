@@ -148,6 +148,14 @@ var TSOS;
             }
         };
 
+        Shell.prototype.getCommands = function () {
+            var commands = [];
+            for (var i = 0; i < this.commandList.length; i++) {
+                commands[i] = this.commandList[i].command;
+            }
+            return commands;
+        };
+
         // args is an option parameter, ergo the ? which allows TypeScript to understand that
         Shell.prototype.execute = function (fn, args) {
             // We just got a command, so advance the line...
@@ -269,17 +277,50 @@ var TSOS;
         };
 
         Shell.prototype.shellStatus = function (args) {
+            var element = document.getElementById('taStatusBarStatus');
             if (args.length > 0) {
-                STATUS = args[0];
+                element.innerHTML = "Status: " + args[0];
             } else {
                 _StdOut.putText("Usage: status <string>  Please supply a string");
             }
+            /*if(args.length > 0)
+            {
+            STATUS = args[0];
+            }
+            else
+            {
+            _StdOut.putText("Usage: status <string>  Please supply a string");
+            }*/
         };
 
         Shell.prototype.shellDate = function (args) {
+            var date, clock, hour, min, mins, period;
+            date = new Date();
+            clock = date.getHours();
+            mins = date.getMinutes();
+            min = "";
+            period = "AM";
+            if (clock == 0) {
+                hour = 12;
+            } else if (clock > 12) {
+                hour = clock - 12;
+                period = "PM";
+            } else if (clock == 12) {
+                hour += clock;
+                period = "PM";
+            } else {
+                hour += clock;
+            }
+
+            if (mins < 10) {
+                min = "0" + mins; //add the extra 0 for the tens place
+            } else {
+                min += mins;
+            }
+            _StdOut.putText(date.toLocaleDateString() + " " + hour + ":" + min + " " + period);
             // var now = new Date();
             //_StdOut.putText(now.getMonth
-            _StdOut.putText("TEMP DATE STRING");
+            //_StdOut.putText("TEMP DATE STRING");
         };
 
         Shell.prototype.shellWhereAmI = function (args) {
@@ -361,32 +402,40 @@ var TSOS;
             element.style.display = "none";
             var element2 = document.getElementById("divConsole");
             element2.style.backgroundImage = "url('dist/images/basedgod.gif')";
+            var element3 = document.getElementById('taStatusBarStatus');
+            element3.innerHTML = "Status: " + "THANKYOUBASED GOD";
             _Kernel.krnShutdown();
         };
 
         Shell.prototype.shellLoad = function (args) {
-            var input = "";
-            var hexCharacters = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f", " "];
+            //var input = "";
+            var input = document.getElementById("taProgramInput");
 
-            // make all text lower case from the User Program Input
-            input = document.getElementById("taProgramInput").value.trim().toLowerCase();
+            //var program, validated, charCheck;
+            var program = input.value;
+            program = program.trim();
+            var memoryString = "";
+            var validated = true;
 
-            //if blank ...not good
-            if (input === "") {
-                _StdOut.putText("Awaiting orders #taskForce");
-            } else {
-                for (var i = 0; i < input.length; i++) {
-                    if (hexCharacters.indexOf(input.charAt(i)) === -1 && i === input.length - 1) {
-                        _StdOut.putText("orders received. wait wat? #taskForce");
-                    } else {
-                        // if all chars are hex we are good
-                        var tempLength = input.length - 1;
-                        if (i === tempLength) {
-                            _MemoryManager.loadMemory(memoryString);
-                            _StdOut.putText("Lil B loves you.... and your hex #taskForce");
-                        }
+            for (var i = 0; i < program.length; i++) {
+                var charCheck = program.charAt(i);
+                if (!((charCheck >= 'A' && charCheck <= 'F') || (charCheck >= 'a' && charCheck <= 'f') || (charCheck >= '0' && charCheck <= '9') || charCheck === ' ')) {
+                    validated = false;
+                } else {
+                    if (charCheck !== ' ') {
+                        memoryString += program.charAt(i);
                     }
                 }
+            }
+            if (program.length == 0 || program.length % 2 != 0) {
+                validated = false;
+            }
+
+            if (validated) {
+                //_MemoryManager.loadMemory(memoryString);
+                _StdOut.putText("Lil B loves you.... program load successful #taskForce.");
+            } else {
+                _StdOut.putText("Lil B is not pleased. Program Invalid.");
             }
         };
 <<<<<<< HEAD

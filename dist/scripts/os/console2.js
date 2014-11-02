@@ -49,8 +49,8 @@ var TSOS;
                 if (chr === String.fromCharCode(13)) {
                     // The enter key marks the end of a console command, so ...
                     // ... tell the shell ...
-                    this.history[this.history.length] = this.buffer;
-                    this.historyIndex = this.history.length;
+                    //this.history[this.history.length] = this.buffer;
+                    //this.historyIndex = this.history.length;
                     _OsShell.handleInput(this.buffer);
 
                     // ... and reset our buffer.
@@ -80,32 +80,37 @@ var TSOS;
                             if (matchFound) {
                                 this.replaceBuffer(ourBuffer);
                             }
-                        } else if (chr == "upArrow") {
-                            if (this.historyIndex > 0) {
-                                var pastCommands = this.history[this.historyIndex - 1];
-                                this.replaceBuffer(pastCommands);
-                                this.historyIndex = this.historyIndex - 1;
-                            }
-                        } else if (chr == "downArrow") {
-                            if (this.historyIndex < this.history.length - 1) {
-                                var pastCommands = this.history[this.historyIndex + 1];
-                                this.replaceBuffer(pastCommands);
-                                this.historyIndex = this.historyIndex + 1;
-                            }
                         } else {
-                            // This is a "normal" character, so ...
-                            // ... draw it on the screen...
-                            this.putText(chr);
+                            if (chr == "upArrow") {
+                                if (this.historyIndex > 0) {
+                                    var pastCommands = this.history[this.historyIndex - 1];
+                                    this.replaceBuffer(pastCommands);
+                                    this.historyIndex = this.historyIndex - 1;
+                                }
+                            } else {
+                                if (chr == String.fromCharCode(40)) {
+                                    /*if(this.historyIndex < this.history.length - 1)
+                                    {
+                                    var pastCommands = this.history[this.historyIndex + 1]
+                                    this.replaceBuffer(pastCommands);
+                                    this.historyIndex = this.historyIndex + 1;
+                                    }*/
+                                } else {
+                                    // This is a "normal" character, so ...
+                                    // ... draw it on the screen...
+                                    this.putText(chr);
 
-                            // ... and add it to our buffer.
-                            this.buffer += chr;
+                                    // ... and add it to our buffer.
+                                    this.buffer += chr;
+                                }
+                            }
                         }
                     }
                 }
+                // TODO: Write a case for Ctrl-C.
             }
         };
 
-        // TODO: Write a case for Ctrl-C.
         Console.prototype.putText = function (text) {
             // My first inclination here was to write two functions: putChar() and putString().
             // Then I remembered that JavaScript is (sadly) untyped and it won't differentiate
@@ -152,17 +157,6 @@ var TSOS;
         };
 
         Console.prototype.advanceLine = function () {
-<<<<<<< HEAD
-            this.currentXPosition = 0;
-
-            /*
-            * Font size measures from the baseline to the highest point in the font.
-            * Font descent measures from the baseline to the lowest point in the font.
-            * Font height margin is extra spacing between the lines.
-            */
-            this.currentYPosition += _DefaultFontSize + _DrawingContext.fontDescent(this.currentFont, this.currentFontSize) + _FontHeightMargin;
-=======
->>>>>>> Test
             // TODO: Handle scrolling. (Project 1)
             this.currentXPosition = 0;
 
@@ -205,41 +199,34 @@ var TSOS;
             return matchingString;
         };
 
-        /*public tabComplete(buffer):void
-        {
-        var commands:string[] = [];
-        var commandList = _OsShell.getCommands();
-        for(var i = 0; i < commandList[i]; i++)
-        {
-        var cmd = commandList[i];
-        if(Console.startsWith(buffer, cmd))
-        {
-        commands[commands.length] = commandList[i];
-        }
-        }
-        if(commands.length == 1)
-        {
-        var textAdd:string = commands[0].substring(this.buffer.length, commands[0].length);
-        this.putText(textAdd);
-        this.buffer += textAdd;
-        }
-        }
-        
-        public static startsWith(arg1:string, arg2:string):boolean
-        {
-        if(arg1.length > arg2.length)
-        {
-        return false;
-        }
-        for(var i = 0; i < arg1.length; i++)
-        {
-        if(arg1.charAt(i) !== arg2.charAt(i))
-        {
-        return false;
-        }
-        }
-        return true;
-        }*/
+        Console.prototype.tabComplete = function (buffer) {
+            var commands = [];
+            var commandList = _OsShell.getCommands();
+            for (var i = 0; i < commandList[i]; i++) {
+                var cmd = commandList[i];
+                if (Console.startsWith(buffer, cmd)) {
+                    commands[commands.length] = commandList[i];
+                }
+            }
+            if (commands.length == 1) {
+                var textAdd = commands[0].substring(this.buffer.length, commands[0].length);
+                this.putText(textAdd);
+                this.buffer += textAdd;
+            }
+        };
+
+        Console.startsWith = function (arg1, arg2) {
+            if (arg1.length > arg2.length) {
+                return false;
+            }
+            for (var i = 0; i < arg1.length; i++) {
+                if (arg1.charAt(i) !== arg2.charAt(i)) {
+                    return false;
+                }
+            }
+            return true;
+        };
+
         Console.prototype.backSpace = function (text) {
             var lenghtOfChar = _DrawingContext.measureText(this.currentFont, this.currentFontSize, text);
             var heightY = _DefaultFontSize + _FontHeightMargin;

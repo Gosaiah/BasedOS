@@ -207,6 +207,16 @@ module TSOS
             }
         }
 
+        public getCommands() : string[]
+        {
+            var commands:string[] = [];
+            for(var i = 0; i < this.commandList.length; i++)
+            {
+                commands[i] = this.commandList[i].command;
+            }
+            return commands
+        }
+
         // args is an option parameter, ergo the ? which allows TypeScript to understand that
         public execute(fn, args?) 
         {
@@ -351,21 +361,64 @@ module TSOS
 
         public shellStatus(args)
         {
+            var element = <HTMLParagraphElement> document.getElementById('taStatusBarStatus');
             if(args.length > 0)
+            {
+                element.innerHTML = "Status: " + args[0];
+            }
+            else
+            {
+                _StdOut.putText("Usage: status <string>  Please supply a string");
+            }
+            /*if(args.length > 0)
             {
                 STATUS = args[0];
             }
             else
             {
                 _StdOut.putText("Usage: status <string>  Please supply a string");
-            }
+            }*/
         }
 
         public shellDate(args)
         {
+            var date, clock, hour, min, mins, period;
+            date = new Date();
+            clock = date.getHours();
+            mins = date.getMinutes();
+            min = "";
+            period = "AM";
+            if(clock == 0)  
+            {   
+                hour = 12;    
+            }
+            else if(clock > 12)  //fix for military time etc
+            {   
+                hour = clock - 12;    
+                period = "PM";    
+            } 
+            else if(clock == 12) 
+            {   
+                hour += clock;  
+                period = "PM";
+            }   
+            else    
+            {   
+                hour += clock;  
+            }
+            
+            if(mins < 10)
+            {
+                min = "0" + mins; //add the extra 0 for the tens place
+            }
+            else
+            {
+                min += mins;
+            }
+            _StdOut.putText(date.toLocaleDateString() + " " + hour + ":" + min + " " + period);
             // var now = new Date();
             //_StdOut.putText(now.getMonth
-            _StdOut.putText("TEMP DATE STRING");       
+            //_StdOut.putText("TEMP DATE STRING");       
         }
 
         public shellWhereAmI(args) 
@@ -462,46 +515,57 @@ module TSOS
             //fill canvas with black
             //_DrawingContext.fillStyle = "black";
             //_DrawingContext.fillRect(0, 0, _Canvas.width, _Canvas.height);
+            
+            // clear display
             var element:HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("display");
             element.style.display = "none";
+            // show based gif
             var element2:HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("divConsole");
             element2.style.backgroundImage = "url('dist/images/basedgod.gif')";
+            // chage status
+            var element3 = <HTMLParagraphElement> document.getElementById('taStatusBarStatus');
+            element3.innerHTML = "Status: " + "THANK YOU BASED GOD";
             _Kernel.krnShutdown();
         }
 
         public shellLoad(args) 
         {
-            var input = "";
-            var hexCharacters = ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"," "];
-            // make all text lower case from the User Program Input
-            input = (<HTMLInputElement>document.getElementById("taProgramInput")).value.trim().toLowerCase();
+            //var input = "";
+            var input:HTMLTextAreaElement = <HTMLTextAreaElement> document.getElementById("taProgramInput");
+            //var program, validated, charCheck;
+            var program:string = input.value;
+            program = program.trim();
+            var memoryString = "";
+            var validated:boolean = true;
 
-            //if blank ...not good
-            if(input === "")
+            for(var i = 0; i < program.length; i++)
             {
-                _StdOut.putText("Awaiting orders #taskForce");
-            }
-            else 
-            {
-                // if not all numbers are hex...not good enough
-                for (var i = 0; i < input.length; i++)
+                var charCheck = program.charAt(i);
+                if(!( (charCheck >= 'A' && charCheck <= 'F') || (charCheck >= 'a' && charCheck <= 'f') || (charCheck >= '0' && charCheck <= '9') || charCheck === ' '))
                 {
-                    if (hexCharacters.indexOf(input.charAt(i)) === -1 && i === input.length - 1){
-                        _StdOut.putText("orders received. wait wat? #taskForce");
-                    }
-                
-                    else 
+                    validated = false;
+                }
+                else
+                {
+                    if(charCheck !== ' ')
                     {
-                        // if all chars are hex we are good
-                        var tempLength = input.length-1;
-                        if(i === tempLength)
-                        {    
-                            _MemoryManager.loadMemory(memoryString);           
-                            _StdOut.putText("Lil B loves you.... and your hex #taskForce");
-                        }
+                        memoryString += program.charAt(i);
                     }
                 }
+            }
+            if(program.length == 0 || program.length % 2 !=0)
+            {
+                validated = false;
+            }
 
+            if(validated)
+            {
+                //_MemoryManager.loadMemory(memoryString);
+                _StdOut.putText("Lil B loves you.... program load successful #taskForce.");
+            }
+            else
+            {
+                _StdOut.putText("Lil B is not pleased. Program Invalid.");
             }
         }
 
