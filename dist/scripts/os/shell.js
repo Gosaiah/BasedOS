@@ -53,8 +53,13 @@ var TSOS;
             sc = new TSOS.ShellCommand(this.shellPrompt, "prompt", "<string> - Sets the prompt.");
             this.commandList[this.commandList.length] = sc;
 
+<<<<<<< HEAD
             //status
             sc = new shellCommand(this.shellStatus, "status", "<string> - Sets the status");
+=======
+            // status
+            sc = new TSOS.ShellCommand(this.shellStatus, "status", "<string> - Updates the Status");
+>>>>>>> Test
             this.commandList[this.commandList.length] = sc;
 
             // date
@@ -65,8 +70,29 @@ var TSOS;
             sc = new TSOS.ShellCommand(this.shellWhereAmI, "whereami", "- Displays the location.");
             this.commandList[this.commandList.length] = sc;
 
+<<<<<<< HEAD
             // portal - Cake is a Lie?
             sc = new shellCommand(this.shellPortal, "portal", "- Displays if the cake is in fact a lie..");
+=======
+            // Cake is a Lie?
+            sc = new TSOS.ShellCommand(this.shellPortal, "portal", "- Displays if the cake is in fact a lie..");
+            this.commandList[this.commandList.length] = sc;
+
+            // Cause Based blue screen of death
+            sc = new TSOS.ShellCommand(this.shellBsod, "bsod", "- You sure you want to do that? #taskForce will find you!");
+            this.commandList[this.commandList.length] = sc;
+
+            // Load
+            sc = new TSOS.ShellCommand(this.shellLoad, "load", "<string> - Allows for #Based Hex code");
+            this.commandList[this.commandList.length] = sc;
+
+            // Run
+            sc = new TSOS.ShellCommand(this.shellRun, "run", "<processId> - Executes a program in memory");
+            this.commandList[this.commandList.length] = sc;
+
+            // Single Step
+            sc = new TSOS.ShellCommand(this.shellStep, "step", "<int> - Runs single step mode via the process given (pId)");
+>>>>>>> Test
             this.commandList[this.commandList.length] = sc;
 
             // processes - list the running processes and their IDs
@@ -123,6 +149,14 @@ var TSOS;
             }
         };
 
+        Shell.prototype.getCommands = function () {
+            var commands = [];
+            for (var i = 0; i < this.commandList.length; i++) {
+                commands[i] = this.commandList[i].command;
+            }
+            return commands;
+        };
+
         // args is an option parameter, ergo the ? which allows TypeScript to understand that
         Shell.prototype.execute = function (fn, args) {
             // We just got a command, so advance the line...
@@ -136,7 +170,12 @@ var TSOS;
                 _StdOut.advanceLine();
             }
 
-            // ... and finally write the prompt again.
+            // ... and finally write the prompt again...almost..
+            // as long as the canvas isnt filled with black, write the prompt again
+            /*if(_DrawingContext.fillStyle != "#000000")
+            {
+            this.putPrompt();
+            }*/
             this.putPrompt();
         };
 
@@ -239,6 +278,7 @@ var TSOS;
         };
 
         Shell.prototype.shellStatus = function (args) {
+<<<<<<< HEAD
             if (args.length > 0) {
                 STATUS = args[0];
             } else {
@@ -252,6 +292,54 @@ var TSOS;
         _StdOut.putText(now.getMonth
         
         }*/
+=======
+            var element = document.getElementById('taStatusBarStatus');
+            if (args.length > 0) {
+                element.innerHTML = "Status: " + args[0];
+            } else {
+                _StdOut.putText("Usage: status <string>  Please supply a string");
+            }
+            /*if(args.length > 0)
+            {
+            STATUS = args[0];
+            }
+            else
+            {
+            _StdOut.putText("Usage: status <string>  Please supply a string");
+            }*/
+        };
+
+        Shell.prototype.shellDate = function (args) {
+            var date, clock, hour, min, mins, period;
+            date = new Date();
+            clock = date.getHours();
+            mins = date.getMinutes();
+            min = "";
+            period = "AM";
+            if (clock == 0) {
+                hour = 12;
+            } else if (clock > 12) {
+                hour = clock - 12;
+                period = "PM";
+            } else if (clock == 12) {
+                hour += clock;
+                period = "PM";
+            } else {
+                hour += clock;
+            }
+
+            if (mins < 10) {
+                min = "0" + mins; //add the extra 0 for the tens place
+            } else {
+                min += mins;
+            }
+            _StdOut.putText(date.toLocaleDateString() + " " + hour + ":" + min + " " + period);
+            // var now = new Date();
+            //_StdOut.putText(now.getMonth
+            //_StdOut.putText("TEMP DATE STRING");
+        };
+
+>>>>>>> Test
         Shell.prototype.shellWhereAmI = function (args) {
             _StdOut.putText("Forget you! where the heck am i?!?! And why am i still not on FoxNet -_-");
         };
@@ -300,6 +388,60 @@ var TSOS;
             } else {
                 _StdOut.putText("Usage: prompt <string>  Please supply a string.");
             }
+        };
+
+        Shell.prototype.shellBsod = function () {
+            // Call Kernel trap
+            _Kernel.krnTrapError("FakeBased. BasedWorld does not approve -_-");
+
+            //fill canvas with black
+            //_DrawingContext.fillStyle = "black";
+            //_DrawingContext.fillRect(0, 0, _Canvas.width, _Canvas.height);
+            var element = document.getElementById("display");
+            element.style.display = "none";
+            var element2 = document.getElementById("divConsole");
+            element2.style.backgroundImage = "url('dist/images/basedgod.gif')";
+            var element3 = document.getElementById('taStatusBarStatus');
+            element3.innerHTML = "Status: " + "THANKYOUBASED GOD";
+            _Kernel.krnShutdown();
+        };
+
+        Shell.prototype.shellLoad = function (args) {
+            //var input = "";
+            var input = document.getElementById("taProgramInput");
+
+            //var program, validated, charCheck;
+            var program = input.value;
+            program = program.trim();
+            var memoryString = "";
+            var validated = true;
+
+            for (var i = 0; i < program.length; i++) {
+                var charCheck = program.charAt(i);
+                if (!((charCheck >= 'A' && charCheck <= 'F') || (charCheck >= 'a' && charCheck <= 'f') || (charCheck >= '0' && charCheck <= '9') || charCheck === ' ')) {
+                    validated = false;
+                } else {
+                    if (charCheck !== ' ') {
+                        memoryString += program.charAt(i);
+                    }
+                }
+            }
+            if (program.length == 0 || program.length % 2 != 0) {
+                validated = false;
+            }
+
+            if (validated) {
+                //_MemoryManager.loadMemory(memoryString);
+                _StdOut.putText("Lil B loves you.... program load successful #taskForce.");
+            } else {
+                _StdOut.putText("Lil B is not pleased. Program Invalid.");
+            }
+        };
+
+        Shell.prototype.shellRun = function (pId) {
+        };
+
+        Shell.prototype.shellStep = function (pId) {
         };
         return Shell;
     })();

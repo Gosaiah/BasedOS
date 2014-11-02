@@ -12,9 +12,17 @@
 // Global "CONSTANTS" (There is currently no const or final or readonly type annotation in TypeScript.)
 // TODO: Make a global object and use that instead of the "_" naming convention in the global namespace.
 //
+<<<<<<< HEAD
 var APP_NAME: string    = "CakeOS";   // 'cause Bob and I were at a loss for a better name.
 var APP_VERSION: string = "9.29";   // Good way to keep track of dates
 var STATUS = "Enter command: status <string> to change your status";
+=======
+var APP_NAME: string    = "BasedOS";   // 'cause Bob and I were at a loss for a better name.
+var APP_VERSION: string = "10.13.3";   // Good way to keep track of dates
+var STATUS: string = "Type command: <status> to make a status";
+var statusCanvas = null;
+var myStatus = null;
+>>>>>>> Test
 
 var CPU_CLOCK_INTERVAL: number = 100;   // This is in ms, or milliseconds, so 1000 = 1 second.
 
@@ -26,6 +34,8 @@ var KEYBOARD_IRQ: number = 1;
 //
 // Global Variables
 //
+//var _PArray = new Array<TSOS.PCB>(); // the Processes
+
 var _CPU: TSOS.Cpu;  // Utilize TypeScript's type annotation system to ensure that _CPU is an instance of the Cpu class.
 
 var _OSclock: number = 0;  // Page 23.
@@ -46,6 +56,9 @@ var _Kernel: TSOS.Kernel;
 var _KernelInterruptQueue = null;
 var _KernelBuffers: any[] = null;
 var _KernelInputQueue = null;
+
+var _Memory: TSOS.Memory;
+var _MemoryManager: TSOS.MemoryManager;
 
 // Standard input and output
 var _StdIn  = null;

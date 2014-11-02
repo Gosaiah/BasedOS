@@ -8,46 +8,73 @@
    The Kernel Keyboard Device Driver.
    ---------------------------------- */
 
-module TSOS {
+module TSOS 
+{
 
     // Extends DeviceDriver
-    export class DeviceDriverKeyboard extends DeviceDriver {
+    export class DeviceDriverKeyboard extends DeviceDriver 
+    {
 
-        constructor() {
+        constructor() 
+        {
             // Override the base method pointers.
             super(this.krnKbdDriverEntry, this.krnKbdDispatchKeyPress);
         }
 
-        public krnKbdDriverEntry() {
+        public krnKbdDriverEntry() 
+        {
             // Initialization routine for this, the kernel-mode Keyboard Device Driver.
             this.status = "loaded";
             // More?
         }
 
-        public krnKbdDispatchKeyPress(params) {
+        public krnKbdDispatchKeyPress(params) 
+        {
             // Parse the params.    TODO: Check that they are valid and osTrapError if not.
             var keyCode = params[0];
             var isShifted = params[1];
             _Kernel.krnTrace("Key code:" + keyCode + " shifted:" + isShifted);
             var chr = "";
             // Check to see if we even want to deal with the key that was pressed.
+<<<<<<< HEAD
             // Check for backspace or Tab
             if (keyCode == 8)
+=======
+            // Check for a backspaces(8) and tabs(9)
+            if(keyCode == 38)
+            {
+                chr = "upArrow";
+                _KernelInputQueue.enqueue(chr);
+            }
+            if(keyCode == 40)
+            {
+                chr = "downArrow";
+                _KernelInputQueue.enqueue(chr);
+            }
+            if(keyCode == 8 || keyCode == 9)
+>>>>>>> Test
             {
                 chr = String.fromCharCode(keyCode);
                 _KernelInputQueue.enqueue(chr);
             }
+<<<<<<< HEAD
             if (((keyCode >= 65) && (keyCode <= 90)) ||   // A..Z
                 ((keyCode >= 97) && (keyCode <= 123)))    // a..z {
                 {  
+=======
+            if (((keyCode >= 65) && (keyCode <= 90)) || ((keyCode >= 97) && (keyCode <= 123))) 
+            {  // A..Z     // a..z 
+>>>>>>> Test
                 // Determine the character we want to display.
                 // Assume it's lowercase...
                 chr = String.fromCharCode(keyCode + 32);
                 // ... then check the shift key and re-adjust if necessary.
-                if (isShifted) {
+                if (isShifted) 
+                {
                     chr = String.fromCharCode(keyCode);
                 }
                 // TODO: Check for caps-lock and handle as shifted if so.
+<<<<<<< HEAD
                 _KernelInputQueue.enqueue(chr);
             } else
             {
@@ -55,11 +82,21 @@ module TSOS {
                     (keyCode == 32)                     ||   // space
                     (keyCode == 13))                        // enter
                 {                          
+=======
+                _KernelInputQueue.enqueue(chr);  //v q
+            } 
+            else
+            {
+                if (((keyCode >= 48) && (keyCode <= 57)) || (keyCode == 32) || (keyCode == 13)) 
+                {
+                    //switch statement for characters input
+>>>>>>> Test
                     if(isShifted && ((keyCode >= 48) && (keyCode <= 57)))
                     {
                         switch(keyCode)
                         {
                             case 48:
+<<<<<<< HEAD
                                 // )
                                 keyCode = 41;
                                 break;
@@ -102,20 +139,200 @@ module TSOS {
 
                             case 57:
                                 // (
+=======
+                                // Closing Paren -> )
+                                keyCode = 41;
+                                break;
+                            case 49:
+                                // Exclamation Point -> !
+                                keyCode = 33;
+                                break;
+                            case 50:
+                                // At -> @
+                                keyCode = 64;
+                                break;
+                            case 51:
+                                // Hash/Pound -> #
+                                keyCode = 35;
+                                break;
+                            case 52:
+                                // Dollar Sign -> $
+                                keyCode = 36;
+                                break;
+                            case 53:
+                                // Percentage -> %
+                                keyCode = 37;
+                                break;
+                            case 54:
+                                // hat -> ^
+                                keyCode = 94;
+                                break;
+                            case 55:
+                                // And Symbol -> &
+                                keyCode = 38;
+                                break;
+                            case 56:
+                                // Star -> *
+                                keyCode = 42;
+                                break;
+                            case 57:
+                                // Open Parenthesis -> (
+>>>>>>> Test
                                 keyCode = 40;
                                 break;
                             default:
                                 keyCode = keyCode;
                                 break
                         }
+<<<<<<< HEAD
                     }                       
+=======
+                    }
+>>>>>>> Test
                     chr = String.fromCharCode(keyCode);
                     _KernelInputQueue.enqueue(chr);
                 }
                 else
                 {
+<<<<<<< HEAD
                     // punctuation marks
                     
+=======
+                    // Punctuation Marks Input
+                    var isPunctuation = false;
+                    // for period -> .
+                    if(keyCode == 190 && !isPunctuation)
+                    {
+                        keyCode = 46;
+                        if(isShifted)
+                        {
+                            keyCode = 62;
+                        }
+                        isPunctuation = true;
+                        chr = String.fromCharCode(keyCode);
+                        _KernelInputQueue.enqueue(chr);
+                    }
+                    // for comma -> ,
+                    if(keyCode == 188 && !isPunctuation)
+                    {
+                        keyCode = 44;
+                        if(isShifted)
+                        {
+                            keyCode = 60;
+                        }
+                        isPunctuation = true;
+                        chr = String.fromCharCode(keyCode);
+                        _KernelInputQueue.enqueue(chr);
+                    }
+                    // for forward slash -> /
+                    if(keyCode == 191 && !isPunctuation)
+                    {
+                        keyCode = 47;
+                        if(isShifted)
+                        {
+                            keyCode = 63;
+                        }
+                        isPunctuation = true;
+                        chr = String.fromCharCode(keyCode);
+                        _KernelInputQueue.enqueue(chr);
+                    }
+                    // for semicolon -> ;
+                    if(keyCode == 186 && !isPunctuation)
+                    {
+                        keyCode = 59;
+                        if(isShifted)
+                        {
+                            keyCode = 58;
+                        }
+                        isPunctuation = true;
+                        chr = String.fromCharCode(keyCode);
+                        _KernelInputQueue.enqueue(chr);
+                    }
+                    // for apostrophe -> '
+                    if(keyCode == 222 && !isPunctuation)
+                    {
+                        keyCode = 39;
+                        if(isShifted)
+                        {
+                            keyCode = 34;
+                        }
+                        isPunctuation = true;
+                        chr = String.fromCharCode(keyCode);
+                        _KernelInputQueue.enqueue(chr);
+                    }
+                    // for open bracket -> [
+                    if(keyCode == 219 && !isPunctuation)
+                    {
+                        keyCode = 91;
+                        if(isShifted)
+                        {
+                            keyCode = 123;
+                        }
+                        isPunctuation = true;
+                        chr = String.fromCharCode(keyCode);
+                        _KernelInputQueue.enqueue(chr);
+                    }
+                    // for close bracket -> ]
+                    if(keyCode == 221 && !isPunctuation)
+                    {
+                        keyCode = 93;
+                        if(isShifted)
+                        {
+                            keyCode = 125;
+                        }
+                        isPunctuation = true;
+                        chr = String.fromCharCode(keyCode);
+                        _KernelInputQueue.enqueue(chr);
+                    }
+                    // for backslash -> \
+                    if(keyCode == 220 && !isPunctuation)
+                    {
+                        keyCode = 92;
+                        if(isShifted)
+                        {
+                            keyCode = 124;
+                        }
+                        isPunctuation = true;
+                        chr = String.fromCharCode(keyCode);
+                        _KernelInputQueue.enqueue(chr);
+                    }
+                    // for dash -> -
+                    if(keyCode == 189 && !isPunctuation)
+                    {
+                        keyCode = 45;
+                        if(isShifted)
+                        {
+                            keyCode = 95;
+                        }
+                        isPunctuation = true;
+                        chr = String.fromCharCode(keyCode);
+                        _KernelInputQueue.enqueue(chr);
+                    }
+                    // for equal sign -> =
+                    if(keyCode == 187 && !isPunctuation)
+                    {
+                        keyCode = 61;
+                        if(isShifted)
+                        {
+                            keyCode = 43;
+                        }
+                        isPunctuation = true;
+                        chr = String.fromCharCode(keyCode);
+                        _KernelInputQueue.enqueue(chr);
+                    }
+                    // for tilda -> ~
+                    if(keyCode == 192 && !isPunctuation)
+                    {
+                        keyCode = 96;
+                        if(isShifted)
+                        {
+                            keyCode = 126;
+                        }
+                        isPunctuation = true;
+                        chr = String.fromCharCode(keyCode);
+                        _KernelInputQueue.enqueue(chr);
+                    }
+>>>>>>> Test
                 }
             }
         }
