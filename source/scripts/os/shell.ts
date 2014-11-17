@@ -497,6 +497,11 @@ module TSOS
 
             if(validated)
             {
+                for (var k = 0; k < program.length; k++)
+                {
+                    alert(program[k]);
+                    _MemoryManager.load(program[k]);
+                }
                 //_MemoryManager.loadMemory(memoryString);
                 _StdOut.putText("Lil B loves you.... program load successful #taskForce.");
             }

@@ -13,7 +13,12 @@
 // TODO: Make a global object and use that instead of the "_" naming convention in the global namespace.
 //
 var APP_NAME: string    = "BasedOS";   // 'cause Bob and I were at a loss for a better name.
-var APP_VERSION: string = "11.02.2";   // Good way to keep track of dates
+var APP_VERSION: string = "11.17.1";   // Good way to keep track of dates
+
+//var _MemoryManager = null; // handler for memory
+//var _MemoryCount = 0; // 
+//var _Memory = [""]; // Assembly commands
+
 
 var CPU_CLOCK_INTERVAL: number = 100;   // This is in ms, or milliseconds, so 1000 = 1 second.
 
@@ -48,8 +53,8 @@ var _KernelInterruptQueue = null;
 var _KernelBuffers: any[] = null;
 var _KernelInputQueue = null;
 
-var _Memory: TSOS.Memory;
-var _MemoryManager: TSOS.MemoryManager;
+//var _Memory: TSOS.Memory;
+//var _MemoryManager: TSOS.MemoryManager;
 
 // Standard input and output
 var _StdIn  = null;

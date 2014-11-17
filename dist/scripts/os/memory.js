@@ -71,3 +71,19 @@ var Glados = null;
 var onDocumentLoad = function () {
     TSOS.Control.hostInit();
 };
+///<reference path="../globals.ts" />
+/**
+* Isaiah Miller
+* Last Updated: 11/5/14
+*/
+var TSOS;
+(function (TSOS) {
+    var memory = (function () {
+        function memory() {
+        }
+        memory.prototype.memory = function () {
+        };
+        return memory;
+    })();
+    TSOS.memory = memory;
+})(TSOS || (TSOS = {}));
