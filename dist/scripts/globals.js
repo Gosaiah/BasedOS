@@ -10,11 +10,8 @@ Operating System Concepts 8th edition by Silberschatz, Galvin, and Gagne.  ISBN 
 // TODO: Make a global object and use that instead of the "_" naming convention in the global namespace.
 //
 var APP_NAME = "BasedOS";
-var APP_VERSION = "11.17.1";
+var APP_VERSION = "11.02.2";
 
-//var _MemoryManager = null; // handler for memory
-//var _MemoryCount = 0; //
-//var _Memory = [""]; // Assembly commands
 var CPU_CLOCK_INTERVAL = 100;
 
 var TIMER_IRQ = 0;
@@ -46,8 +43,9 @@ var _KernelInterruptQueue = null;
 var _KernelBuffers = null;
 var _KernelInputQueue = null;
 
-//var _Memory: TSOS.Memory;
-//var _MemoryManager: TSOS.MemoryManager;
+var _Memory;
+var _MemoryManager;
+
 // Standard input and output
 var _StdIn = null;
 var _StdOut = null;
