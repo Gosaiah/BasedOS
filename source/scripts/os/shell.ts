@@ -471,7 +471,8 @@ module TSOS
             var input:HTMLTextAreaElement = <HTMLTextAreaElement> document.getElementById("taProgramInput");
             //var program, validated, charCheck;
             var program:string = input.value;
-            program = program.trim();
+            //program = program.trim();
+            program = program.split(" ");
             var memoryString = "";
             var validated:boolean = true;
 
@@ -497,7 +498,14 @@ module TSOS
 
             if(validated)
             {
-                //_MemoryManager.loadMemory(memoryString);
+                // Reset memory before loading just in case
+                 
+                for(var k = 0; k < program.length; k++)
+                {
+                     //_MemoryManager.loadMemory(memoryString);
+ 
+                     //_MemoryManager.load(program[k]);
+                }
                 _StdOut.putText("Lil B loves you.... program load successful #taskForce.");
             }
             else
