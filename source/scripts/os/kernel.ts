@@ -30,10 +30,6 @@ module TSOS
             // Initialize the console.
             _Console.init();
 
-            // Initialize the memory
-            //_MemoryManager = new MemoryManager();
-            //_MemoryManager.init();
-
             // Initialize standard input and output to the _Console.
             _StdIn  = _Console;
             _StdOut = _Console;
