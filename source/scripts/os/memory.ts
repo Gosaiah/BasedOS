@@ -2,13 +2,39 @@
 
 /**
 * Isaiah Miller
-* Last Updated: 11/5/14
+* Last Updated: 11/20/14
 */
 module TSOS
 {
-	export class memory
+	export class Memory
 	{
-		public memory()
+		//static fromOtherPoint(point:Point):Point {
+		constructor(public memory: number[] = [])
+		{
+
+        }
+        //private memory = [];
+
+        //memory = memory;
+
+        public init(): void
+        {
+            for(var i = 0; i < 1536; i++)
+            {
+                this.memory[i] = 0;
+            }
+        }
+
+        public getMemoryBlock(i) : number 
+        {
+            return this.memory[i];
+        }
+
+        public setMemoryBlock(index: number, value : number)
+        {
+            this.memory[index] = value;
+        }
+		/*public memory()
 		{
 			var counter;
 			counter = 0;
@@ -19,7 +45,7 @@ module TSOS
 		{/*
 			_Memory[_MemoryCount] = daMemory;
 			_MemoryCount++;
-			alert(_Memory);*/
-		}
+			alert(_Memory);
+		}*/
 	}
 }
