@@ -6,9 +6,31 @@
 */
 module TSOS
 {
-	export class memory
+	export class Memory
 	{
-		public memory()
+		constructor(public memory: number[] = [])
+		{
+
+        }
+
+        public init(): void
+        {
+            for(var i = 0; i < 1536; i++){
+                this.memory[i] = 0;
+            }
+        }
+
+        public getMemoryBlock(i) : number 
+        {
+            return this.memory[i];
+        }
+
+        public setMemoryBlock(index: number, value : number)
+        {
+            this.memory[index] = value;
+        }
+
+		/*public memory()
 		{
 			var counter;
 			counter = 0;
@@ -19,7 +41,7 @@ module TSOS
 		{/*
 			_Memory[_MemoryCount] = daMemory;
 			_MemoryCount++;
-			alert(_Memory);*/
-		}
+			alert(_Memory);
+		}*/
 	}
 }

@@ -396,7 +396,7 @@ var TSOS;
             }
 
             if (validated) {
-                //_MemoryManager.loadMemory(memoryString);
+                _MemoryManager.loadMemory(memoryString);
                 _StdOut.putText("Lil B loves you.... program load successful #taskForce.");
             } else {
                 _StdOut.putText("Lil B is not pleased. Program Invalid.");
