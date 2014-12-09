@@ -52,7 +52,7 @@ module TSOS {
             var z = ((i - (x * 256)) - (y * 16));
             return "" + MemoryManager.transform(x) + MemoryManager.transform(y) + MemoryManager.transform(z);
         }
-        private static transform(i : number): string
+        public static transform(i : number): string
         {
             if(i < 10)
             {
@@ -75,7 +75,7 @@ module TSOS {
             return "";
         }
 
-        private static getNumericValue(hexChar : string): number
+        public static getNumericValue(hexChar : string): number
         {
             switch (hexChar.charAt(0)){
                 case 'A':
