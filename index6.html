@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1"> 
+		<title>BasedOS - a browser-based virtual Operating System in TypeScript</title>
+		<meta name="description" content="Perspective Page View Navigation: Transforms the page in 3D to reveal a menu" />
+		<meta name="keywords" content="3d page, menu, navigation, mobile, perspective, css transform, web development, web design" />
+		<meta name="author" content="Codrops" />
+		<link rel="shortcut icon" href="../favicon.ico">
+		<link rel="stylesheet" type="text/css" href="dist/styles/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="dist/styles/demo.css" />
+		<link rel="stylesheet" type="text/css" href="dist/styles/component.css" />
+		<link rel="stylesheet" href="dist/styles/tsos.css" type="text/css" media="screen" />
+		<!-- csstransforms3d-shiv-cssclasses-prefixed-teststyles-testprop-testallprops-prefixes-domprefixes-load --> 
+		<script src="js/modernizr.custom.25376.js"></script>
+
+		<!-- Globals CONSTANTS and _Variables. Must included be first. -->
+		   <script type="text/javascript" src="dist/scripts/globals.js"></script>
+
+		   <!-- Host (Hardware Simulation) Routines -->
+		   <script type="text/javascript" src="dist/scripts/host/control.js"></script>
+		   <script type="text/javascript" src="dist/scripts/host/devices.js"></script>
+		   <script type="text/javascript" src="dist/scripts/host/cpu.js"></script>
+
+		   <!-- Virtual OS Routines: Make sure Kernel code is last, since it needs those above it. -->
+		   <script type="text/javascript" src="dist/scripts/os/interrupt.js"></script>
+		   <script type="text/javascript" src="dist/scripts/os/canvastext.js"></script>
+		   <script type="text/javascript" src="dist/scripts/os/console.js"></script>
+		   <script type="text/javascript" src="dist/scripts/os/deviceDriver.js"></script>
+		   <script type="text/javascript" src="dist/scripts/os/deviceDriverKeyboard.js"></script>
+		   <script type="text/javascript" src="dist/scripts/os/queue.js"></script>
+		   <script type="text/javascript" src="dist/scripts/os/shell.js"></script>
+		   <script type="text/javascript" src="dist/scripts/os/shellCommand.js"></script>
+		   <script type="text/javascript" src="dist/scripts/os/userCommand.js"></script>
+		   <script type="text/javascript" src="dist/scripts/os/kernel.js"></script>
+
+		   <!-- Other Routines -->
+		   <script type="text/javascript" src="dist/scripts/utils.js"></script>
+		   <!-- Uncomment this line below to enable Glados testing -->
+		   <!-- <script type="text/javascript" src="http://www.labouseur.com/courses/os/projects/glados.js"></script> -->
+	</head>
+	<body onload="onDocumentLoad();">
+		<div id="perspective" class="perspective effect-laydown">
+			<div class="bigContainer">
+				<div id="divButtonBar" style="margin:4px;">
+				      <input type="button"
+				             id = "btnStartOS"
+				             name="brnStartOS"
+				             class="normal_button"
+				             value="Start"
+				             tabindex="0"
+				             onclick="TSOS.Control.hostBtnStartOS_click(this);">
+
+				      <input type="button"
+				             id = "btnHaltOS"
+				             name="brnHaltOS"
+				             class="normal_button"
+				             disabled="disabled"
+				             value="Halt"
+				             tabindex="1"
+				             onclick="TSOS.Control.hostBtnHaltOS_click(this);">
+
+				      <input type="button"
+				             id = "btnReset"
+				             name="brnReset"
+				             class="normal_button"
+				             disabled="disabled"
+				             value="Reset"
+				             tabindex="2"
+				             onclick="TSOS.Control.hostBtnReset_click(this);">
+
+				      <input type="button"
+				             id = "btnStep"
+				             name="brnStep"
+				             class="normal_button"
+				             disabled="disabled"
+				             value="Step"
+				             tabindex="3"
+				             onclick="TSOS.Control.hostBtnStep_click(this);">
+			   	</div>
+			</div>
+
+			<div class="container">
+				<div class="wrapper"><!-- wrapper needed for scroll -->
+					<!-- Top Navigation -->
+					<header class="codrops-header">
+						<h1>BasedOS <span>A browser-based virtual Operating System in TypeScript</span></h1>	
+					</header>
+					<div class="main clearfix">
+						<div class="column">
+							<div id="divConsole" style="width:500px; height:500px; float:left;">
+							      <canvas id="display"
+							              width="500px"
+							              height="450px"
+							              tabindex="3">
+							      </canvas>
+							</div>
+						</div>
+						<div class="column">
+							<div><p id="taStatusBarStatus">Status: Off</p><p id="taStatusBarDate">Date: Unavailable</p></div>
+							<p><button id="showMenu">Show Menu</button></p>
+							<p>Click on this button to see the content being pushed away in 3D to reveal a navigation or other items.</p>
+						</div>
+						<div class="related">
+						</div>
+					</div><!-- /main -->
+				</div><!-- wrapper -->
+			</div><!-- /container -->
+			<nav class="outer-nav top horizontal">
+				<div id="divLog" style="float:left;">
+			      <label>
+			         <textarea style="width:450px; height:300px; font-size: .5em;"
+								resize:none;
+			         			name="taHostLog"
+			                   id  ="taHostLog"
+			                   rows="10"
+			                   cols="48"
+			         ></textarea>
+			      </label>
+			   </div>
+			   <div id="divUserProgramInput">
+			      <label>
+			         <textarea style="float:left; width:200px; height:300px; font-size: .5em;"
+			         			resize:none;
+			         			name="taProgramInput"
+			                   id  ="taProgramInput"
+			                   rows="8"
+			                   cols="48"
+			         ></textarea>
+			      </label>
+			   </div>
+			   <div id=""; >
+			      <label>
+			         <textarea style="float:left; width:200px; height:300px; font-size: .5em;"
+			         			resize:none;
+			         			name="taMemory"
+			                   id  ="taMemory"
+			                   rows="8"
+			                   cols="48"
+			         ></textarea>
+			      </label>
+			   </div>
+			   <div id="" >
+			      <label>
+			         <textarea style="float:left; width:200px; height:300px; font-size: .5em;"
+			         			resize:none;
+			         			name="taCPU"
+			                   id  ="taCPU"
+			                   rows="8"
+			                   cols="48"
+			         ></textarea>
+			      </label>
+			   </div>
+			   <!--
+				<a href="#" class="icon-home">Home</a>
+				<a href="#" class="icon-news">News</a>
+				<a href="#" class="icon-image">Images</a>
+				<a href="#" class="icon-upload">Uploads</a>
+				<a href="#" class="icon-star">Favorites</a>
+				<a href="#" class="icon-mail">Messages</a>
+				<a href="#" class="icon-lock">Security</a> -->
+			</nav>
+		</div><!-- /perspective -->
+		<script src="js/classie.js"></script>
+		<script src="js/menu.js"></script>
+	</body>
+</html>

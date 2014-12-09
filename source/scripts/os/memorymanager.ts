@@ -104,11 +104,8 @@ module TSOS {
                 var b = MemoryManager.getNumericValue(valB);
                 _Memory.setMemoryBlock(i, a);
                 _Memory.setMemoryBlock(i, b);
-                console.log(i);
                 var x = Math.floor(i / 16);
-                console.log(x);
                 var y = (i - (x * 16)) / 2;
-                console.log(y);
                 var cell = <HTMLTableCellElement>(<HTMLTableRowElement>this.memoryTable.rows.item(x)).cells.item(y + 1);
                 cell.innerHTML = valA + valB;
             }
